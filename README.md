@@ -12,17 +12,17 @@ Kelas : MI - 2C
 ## Report Progress
 
 <span>
-    <img src="assets/pages/1.png" width="320">
+    <img src="assets/pages/1.png" width="200">
 </span>
 <span>
-    <img src="assets/pages/2.png" width="320">
+    <img src="assets/pages/2.png" width="200">
 </span>
 <span>
-    <img src="assets/pages/3.png" width="320">
+    <img src="assets/pages/3.png" width="200">
 </span>
 <span>
-    <img src="assets/pages/4.png" width="320">
+    <img src="assets/pages/4.png" width="200">
 </span>
 <span>
-    <img src="assets/pages/5.png" width="320">
+    <img src="assets/pages/5.png" width="200">
 </span>
