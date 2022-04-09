@@ -17,3 +17,12 @@ Kelas : MI - 2C
 <span>
     <img src="assets/pages/2.png" width="320">
 </span>
+<span>
+    <img src="assets/pages/3.png" width="320">
+</span>
+<span>
+    <img src="assets/pages/4.png" width="320">
+</span>
+<span>
+    <img src="assets/pages/5.png" width="320">
+</span>

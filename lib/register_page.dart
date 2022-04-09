@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_uts/home_page.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -7,105 +8,127 @@ class RegisterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Container(
-          padding: const EdgeInsets.all(50),
-          child: Center(
-            child: Column(
-              children: [
-                Container(
-                  width: 150,
-                  height: 170,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: const Color(0xffEEEEEE),
+        child: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.all(50),
+            child: Center(
+              child: Column(
+                children: [
+                  Container(
+                    width: 150,
+                    height: 170,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: const Color(0xffEEEEEE),
+                    ),
+                    child: Image.asset(
+                      'assets/icons/png/taskly_logo.png',
+                    ),
                   ),
-                  child: Image.asset(
-                    'assets/icons/png/taskly_logo.png',
-                  ),
-                ),
-                const SizedBox(height: 64),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 32,
-                    vertical: 8,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: const Color(0xffEEEEEE),
-                  ),
-                  child: const TextField(
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'First Name',
-                      hintStyle: TextStyle(
-                        fontFamily: 'Raleway',
-                        color: Color.fromARGB(255, 118, 118, 118),
-                        fontSize: 20,
+                  const SizedBox(height: 48),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 32,
+                      vertical: 8,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: const Color(0xffEEEEEE),
+                    ),
+                    child: const TextField(
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'First Name',
+                        hintStyle: TextStyle(
+                          fontFamily: 'Raleway',
+                          color: Color.fromARGB(255, 118, 118, 118),
+                          fontSize: 20,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 18),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 32,
-                    vertical: 8,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: const Color(0xffEEEEEE),
-                  ),
-                  child: const TextField(
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Last Name (Optional)',
-                      hintStyle: TextStyle(
-                        fontFamily: 'Raleway',
-                        color: Color.fromARGB(255, 118, 118, 118),
-                        fontSize: 20,
+                  const SizedBox(height: 18),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 32,
+                      vertical: 8,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: const Color(0xffEEEEEE),
+                    ),
+                    child: const TextField(
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Last Name (Optional)',
+                        hintStyle: TextStyle(
+                          fontFamily: 'Raleway',
+                          color: Color.fromARGB(255, 118, 118, 118),
+                          fontSize: 20,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 18),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 32,
-                    vertical: 8,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: const Color(0xffEEEEEE),
-                  ),
-                  child: const TextField(
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Email',
-                      hintStyle: TextStyle(
-                        fontFamily: 'Raleway',
-                        color: Color.fromARGB(255, 118, 118, 118),
-                        fontSize: 20,
+                  const SizedBox(height: 18),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 32,
+                      vertical: 8,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: const Color(0xffEEEEEE),
+                    ),
+                    child: const TextField(
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Email',
+                        hintStyle: TextStyle(
+                          fontFamily: 'Raleway',
+                          color: Color.fromARGB(255, 118, 118, 118),
+                          fontSize: 20,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 18),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      'assets/images/male-user-1.png',
-                      height: 70,
+                  const SizedBox(height: 18),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 32,
+                      vertical: 8,
                     ),
-                    Image.asset(
-                      'assets/images/female-user-1.png',
-                      height: 70,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: const Color(0xffEEEEEE),
                     ),
-                  ],
-                ),
-                const Spacer(),
-                Center(
-                  child: SizedBox(
+                    child: const TextField(
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Password',
+                        hintStyle: TextStyle(
+                          fontFamily: 'Raleway',
+                          color: Color.fromARGB(255, 118, 118, 118),
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 18),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/images/male-user-1.png',
+                        height: 70,
+                      ),
+                      Image.asset(
+                        'assets/images/female-user-1.png',
+                        height: 70,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 48),
+                  SizedBox(
                     width: double.infinity,
                     height: 60,
                     child: ElevatedButton(
@@ -119,12 +142,12 @@ class RegisterPage extends StatelessWidget {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const RegisterPage(),
+                            builder: (context) => const HomePage(),
                           ),
                         );
                       },
                       child: const Text(
-                        'Start',
+                        'Register',
                         style: TextStyle(
                           fontSize: 20,
                           fontFamily: 'Raleway',
@@ -132,8 +155,8 @@ class RegisterPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
