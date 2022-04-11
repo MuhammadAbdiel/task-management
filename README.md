@@ -26,3 +26,21 @@ Kelas : MI - 2C
 <span>
     <img src="assets/pages/5.png" width="200">
 </span>
+<span>
+    <img src="assets/pages/6.png" width="200">
+</span>
+<span>
+    <img src="assets/pages/7.png" width="200">
+</span>
+<span>
+    <img src="assets/pages/8.png" width="200">
+</span>
+<span>
+    <img src="assets/pages/9.png" width="200">
+</span>
+<span>
+    <img src="assets/pages/10.png" width="200">
+</span>
+<span>
+    <img src="assets/pages/11.png" width="200">
+</span>
