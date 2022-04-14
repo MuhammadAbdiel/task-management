@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_uts/all_tasks_page.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_uts/profile_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -11,6 +12,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var dropdownValue = 'assets/icons/png/alarm-clock.png';
+  bool status = false;
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +83,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                           ),
-                          const SizedBox(height: 24),
+                          const SizedBox(height: 16),
                           Container(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 32,
@@ -181,7 +183,29 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                           ),
-                          const SizedBox(height: 32),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text(
+                                'Turn On Notification',
+                                style: TextStyle(
+                                  fontFamily: 'Raleway',
+                                  color: Color.fromARGB(255, 82, 82, 82),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              Switch(
+                                activeColor: const Color(0xffFFC045),
+                                value: status,
+                                onChanged: (value) {
+                                  setState(() {
+                                    status = value;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
                           SizedBox(
                             width: double.infinity,
                             height: 60,
@@ -271,9 +295,17 @@ class _HomePageState extends State<HomePage> {
                               color: Color(0xff3F3F3F),
                             ),
                           ),
-                          Image.asset(
-                            'assets/images/man.png',
-                            height: 50,
+                          InkWell(
+                            onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const ProfilePage(),
+                              ),
+                            ),
+                            child: Image.asset(
+                              'assets/images/man.png',
+                              height: 50,
+                            ),
                           ),
                         ],
                       ),
@@ -482,7 +514,121 @@ class _HomePageState extends State<HomePage> {
                           motion: const ScrollMotion(),
                           children: [
                             SlidableAction(
-                              onPressed: (context) {},
+                              onPressed: (context) {
+                                showDialog<String>(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      AlertDialog(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    title: const Text(
+                                      'Delete Task',
+                                      style: TextStyle(
+                                        fontFamily: 'Raleway',
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.w700,
+                                        color: Color(0xff3F3F3F),
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    content: const Text(
+                                      'Are you sure?',
+                                      style: TextStyle(
+                                        fontFamily: 'Raleway',
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600,
+                                        color: Color(0xff3F3F3F),
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    actions: <Widget>[
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          InkWell(
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: Container(
+                                                width: 60,
+                                                height: 50,
+                                                margin: const EdgeInsets.only(
+                                                  bottom: 20,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                    color:
+                                                        const Color(0xffFFC045),
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                ),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: const [
+                                                    Text(
+                                                      'No',
+                                                      style: TextStyle(
+                                                        fontFamily: 'Raleway',
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        color:
+                                                            Color(0xff3F3F3F),
+                                                      ),
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                    ),
+                                                  ],
+                                                )),
+                                          ),
+                                          const SizedBox(width: 16),
+                                          InkWell(
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: Container(
+                                                width: 60,
+                                                height: 50,
+                                                margin: const EdgeInsets.only(
+                                                  bottom: 20,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                  color:
+                                                      const Color(0xffFFC045),
+                                                ),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: const [
+                                                    Text(
+                                                      'Yes',
+                                                      style: TextStyle(
+                                                        fontFamily: 'Raleway',
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        color:
+                                                            Color(0xff3F3F3F),
+                                                      ),
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                    ),
+                                                  ],
+                                                )),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
                               foregroundColor: Colors.grey,
                               backgroundColor:
                                   const Color.fromARGB(0, 0, 0, 255),
@@ -544,7 +690,121 @@ class _HomePageState extends State<HomePage> {
                           motion: const ScrollMotion(),
                           children: [
                             SlidableAction(
-                              onPressed: (context) {},
+                              onPressed: (context) {
+                                showDialog<String>(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      AlertDialog(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    title: const Text(
+                                      'Delete Task',
+                                      style: TextStyle(
+                                        fontFamily: 'Raleway',
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.w700,
+                                        color: Color(0xff3F3F3F),
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    content: const Text(
+                                      'Are you sure?',
+                                      style: TextStyle(
+                                        fontFamily: 'Raleway',
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600,
+                                        color: Color(0xff3F3F3F),
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    actions: <Widget>[
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          InkWell(
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: Container(
+                                                width: 60,
+                                                height: 50,
+                                                margin: const EdgeInsets.only(
+                                                  bottom: 20,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                    color:
+                                                        const Color(0xffFFC045),
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                ),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: const [
+                                                    Text(
+                                                      'No',
+                                                      style: TextStyle(
+                                                        fontFamily: 'Raleway',
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        color:
+                                                            Color(0xff3F3F3F),
+                                                      ),
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                    ),
+                                                  ],
+                                                )),
+                                          ),
+                                          const SizedBox(width: 16),
+                                          InkWell(
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: Container(
+                                                width: 60,
+                                                height: 50,
+                                                margin: const EdgeInsets.only(
+                                                  bottom: 20,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                  color:
+                                                      const Color(0xffFFC045),
+                                                ),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: const [
+                                                    Text(
+                                                      'Yes',
+                                                      style: TextStyle(
+                                                        fontFamily: 'Raleway',
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        color:
+                                                            Color(0xff3F3F3F),
+                                                      ),
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                    ),
+                                                  ],
+                                                )),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
                               foregroundColor: Colors.grey,
                               backgroundColor:
                                   const Color.fromARGB(0, 0, 0, 255),
@@ -606,7 +866,121 @@ class _HomePageState extends State<HomePage> {
                           motion: const ScrollMotion(),
                           children: [
                             SlidableAction(
-                              onPressed: (context) {},
+                              onPressed: (context) {
+                                showDialog<String>(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      AlertDialog(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    title: const Text(
+                                      'Delete Task',
+                                      style: TextStyle(
+                                        fontFamily: 'Raleway',
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.w700,
+                                        color: Color(0xff3F3F3F),
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    content: const Text(
+                                      'Are you sure?',
+                                      style: TextStyle(
+                                        fontFamily: 'Raleway',
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600,
+                                        color: Color(0xff3F3F3F),
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    actions: <Widget>[
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          InkWell(
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: Container(
+                                                width: 60,
+                                                height: 50,
+                                                margin: const EdgeInsets.only(
+                                                  bottom: 20,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                    color:
+                                                        const Color(0xffFFC045),
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                ),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: const [
+                                                    Text(
+                                                      'No',
+                                                      style: TextStyle(
+                                                        fontFamily: 'Raleway',
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        color:
+                                                            Color(0xff3F3F3F),
+                                                      ),
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                    ),
+                                                  ],
+                                                )),
+                                          ),
+                                          const SizedBox(width: 16),
+                                          InkWell(
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: Container(
+                                                width: 60,
+                                                height: 50,
+                                                margin: const EdgeInsets.only(
+                                                  bottom: 20,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                  color:
+                                                      const Color(0xffFFC045),
+                                                ),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: const [
+                                                    Text(
+                                                      'Yes',
+                                                      style: TextStyle(
+                                                        fontFamily: 'Raleway',
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        color:
+                                                            Color(0xff3F3F3F),
+                                                      ),
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                    ),
+                                                  ],
+                                                )),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
                               foregroundColor: Colors.grey,
                               backgroundColor:
                                   const Color.fromARGB(0, 0, 0, 255),
@@ -668,7 +1042,121 @@ class _HomePageState extends State<HomePage> {
                           motion: const ScrollMotion(),
                           children: [
                             SlidableAction(
-                              onPressed: (context) {},
+                              onPressed: (context) {
+                                showDialog<String>(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      AlertDialog(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    title: const Text(
+                                      'Delete Task',
+                                      style: TextStyle(
+                                        fontFamily: 'Raleway',
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.w700,
+                                        color: Color(0xff3F3F3F),
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    content: const Text(
+                                      'Are you sure?',
+                                      style: TextStyle(
+                                        fontFamily: 'Raleway',
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600,
+                                        color: Color(0xff3F3F3F),
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    actions: <Widget>[
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          InkWell(
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: Container(
+                                                width: 60,
+                                                height: 50,
+                                                margin: const EdgeInsets.only(
+                                                  bottom: 20,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                    color:
+                                                        const Color(0xffFFC045),
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                ),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: const [
+                                                    Text(
+                                                      'No',
+                                                      style: TextStyle(
+                                                        fontFamily: 'Raleway',
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        color:
+                                                            Color(0xff3F3F3F),
+                                                      ),
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                    ),
+                                                  ],
+                                                )),
+                                          ),
+                                          const SizedBox(width: 16),
+                                          InkWell(
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: Container(
+                                                width: 60,
+                                                height: 50,
+                                                margin: const EdgeInsets.only(
+                                                  bottom: 20,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                  color:
+                                                      const Color(0xffFFC045),
+                                                ),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: const [
+                                                    Text(
+                                                      'Yes',
+                                                      style: TextStyle(
+                                                        fontFamily: 'Raleway',
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        color:
+                                                            Color(0xff3F3F3F),
+                                                      ),
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                    ),
+                                                  ],
+                                                )),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
                               foregroundColor: Colors.grey,
                               backgroundColor:
                                   const Color.fromARGB(0, 0, 0, 255),

@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_uts/home_page.dart';
+// import 'package:toggle_switch/toggle_switch.dart';
+// import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class RegisterPage extends StatelessWidget {
+class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
+
+  @override
+  State<RegisterPage> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+  List<bool> isSelected = List.generate(2, (_) => false);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +34,7 @@ class RegisterPage extends StatelessWidget {
                       'assets/icons/png/list.png',
                     ),
                   ),
-                  const SizedBox(height: 48),
+                  const SizedBox(height: 36),
                   Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 32,
@@ -114,20 +123,36 @@ class RegisterPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 18),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                  const SizedBox(height: 8),
+                  ToggleButtons(
+                    borderRadius: BorderRadius.circular(20),
+                    fillColor: const Color(0xffFFC045).withOpacity(0.8),
+                    children: <Widget>[
                       Image.asset(
                         'assets/images/man.png',
-                        height: 70,
+                        height: 50,
                       ),
                       Image.asset(
                         'assets/images/woman.png',
-                        height: 70,
+                        height: 50,
                       ),
                     ],
+                    onPressed: (int index) {
+                      setState(() {
+                        for (int buttonIndex = 0;
+                            buttonIndex < isSelected.length;
+                            buttonIndex++) {
+                          if (buttonIndex == index) {
+                            isSelected[buttonIndex] = true;
+                          } else {
+                            isSelected[buttonIndex] = false;
+                          }
+                        }
+                      });
+                    },
+                    isSelected: isSelected,
                   ),
-                  const SizedBox(height: 48),
+                  const SizedBox(height: 32),
                   SizedBox(
                     width: double.infinity,
                     height: 60,
