@@ -17,7 +17,7 @@ class MainPage extends StatelessWidget {
                 Row(
                   children: [
                     Image.asset(
-                      'assets/icons/png/taskly_logo.png',
+                      'assets/icons/png/list.png',
                       height: 50,
                     ),
                     const SizedBox(

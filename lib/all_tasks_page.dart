@@ -11,7 +11,11 @@ class AllTasksPage extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
-            padding: const EdgeInsets.only(top: 32, right: 24, left: 24),
+            padding: const EdgeInsets.only(
+              top: 32,
+              right: 24,
+              left: 24,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

@@ -22,7 +22,7 @@ class RegisterPage extends StatelessWidget {
                       color: const Color(0xffEEEEEE),
                     ),
                     child: Image.asset(
-                      'assets/icons/png/taskly_logo.png',
+                      'assets/icons/png/list.png',
                     ),
                   ),
                   const SizedBox(height: 48),
@@ -118,11 +118,11 @@ class RegisterPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.asset(
-                        'assets/images/male-user-1.png',
+                        'assets/images/man.png',
                         height: 70,
                       ),
                       Image.asset(
-                        'assets/images/female-user-1.png',
+                        'assets/images/woman.png',
                         height: 70,
                       ),
                     ],
