@@ -44,3 +44,12 @@ Kelas : MI - 2C
 <span>
     <img src="assets/pages/11.png" width="200">
 </span>
+<span>
+    <img src="assets/pages/12.png" width="200">
+</span>
+<span>
+    <img src="assets/pages/13.png" width="200">
+</span>
+<span>
+    <img src="assets/pages/14.png" width="200">
+</span>
