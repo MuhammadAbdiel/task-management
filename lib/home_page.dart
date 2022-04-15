@@ -34,209 +34,214 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               builder: (BuildContext context) {
-                return Center(
-                  child: SingleChildScrollView(
-                    child: Container(
-                      padding: const EdgeInsets.all(24),
-                      child: Column(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 8,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: const Color(0xffEEEEEE),
-                            ),
-                            child: DropdownButtonHideUnderline(
-                              child: DropdownButton<String>(
-                                iconSize: 0,
-                                value: dropdownValue,
-                                borderRadius: BorderRadius.circular(20),
-                                dropdownColor: const Color(0xffEEEEEE),
-                                onChanged: (String? newValue) {
-                                  setState(() {
-                                    dropdownValue = newValue!;
-                                  });
-                                },
-                                items: <String>[
-                                  'assets/icons/png/alarm-clock.png',
-                                  'assets/icons/png/breakfast.png',
-                                  'assets/icons/png/celeb.png',
-                                  'assets/icons/png/Lunch.png',
-                                  'assets/icons/png/notepad.png',
-                                  'assets/icons/png/online-learning.png',
-                                  'assets/icons/png/settings.png',
-                                  'assets/icons/png/shopping.png',
-                                  'assets/icons/png/treadmill.png',
-                                  'assets/icons/png/travel.png',
-                                ].map<DropdownMenuItem<String>>((String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Container(
-                                      padding: const EdgeInsets.all(2),
-                                      child: Image.asset(value),
-                                    ),
-                                  );
-                                }).toList(),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 32,
-                              vertical: 4,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: const Color(0xffEEEEEE),
-                            ),
-                            child: const TextField(
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: 'Title',
-                                hintStyle: TextStyle(
-                                  fontFamily: 'Raleway',
-                                  color: Color.fromARGB(255, 118, 118, 118),
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                                floatingLabelAlignment:
-                                    FloatingLabelAlignment.center,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 24),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 32,
-                              vertical: 4,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: const Color(0xffEEEEEE),
-                            ),
-                            child: const TextField(
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: 'Description',
-                                hintStyle: TextStyle(
-                                  fontFamily: 'Raleway',
-                                  color: Color.fromARGB(255, 118, 118, 118),
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                                floatingLabelAlignment:
-                                    FloatingLabelAlignment.center,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 24),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 32,
-                              vertical: 4,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: const Color(0xffEEEEEE),
-                            ),
-                            child: const TextField(
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: 'Date',
-                                hintStyle: TextStyle(
-                                  fontFamily: 'Raleway',
-                                  color: Color.fromARGB(255, 118, 118, 118),
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                                floatingLabelAlignment:
-                                    FloatingLabelAlignment.center,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 24),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 32,
-                              vertical: 4,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: const Color(0xffEEEEEE),
-                            ),
-                            child: const TextField(
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: 'Time',
-                                hintStyle: TextStyle(
-                                  fontFamily: 'Raleway',
-                                  color: Color.fromARGB(255, 118, 118, 118),
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                                floatingLabelAlignment:
-                                    FloatingLabelAlignment.center,
-                              ),
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                return StatefulBuilder(
+                  builder: (context, setState) {
+                    return Center(
+                      child: SingleChildScrollView(
+                        child: Container(
+                          padding: const EdgeInsets.all(24),
+                          child: Column(
                             children: [
-                              const Text(
-                                'Turn On Notification',
-                                style: TextStyle(
-                                  fontFamily: 'Raleway',
-                                  color: Color.fromARGB(255, 82, 82, 82),
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 8,
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: const Color(0xffEEEEEE),
+                                ),
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton<String>(
+                                    iconSize: 0,
+                                    value: dropdownValue,
+                                    borderRadius: BorderRadius.circular(20),
+                                    dropdownColor: const Color(0xffEEEEEE),
+                                    onChanged: (String? newValue) {
+                                      setState(() {
+                                        dropdownValue = newValue!;
+                                      });
+                                    },
+                                    items: <String>[
+                                      'assets/icons/png/alarm-clock.png',
+                                      'assets/icons/png/breakfast.png',
+                                      'assets/icons/png/celeb.png',
+                                      'assets/icons/png/Lunch.png',
+                                      'assets/icons/png/notepad.png',
+                                      'assets/icons/png/online-learning.png',
+                                      'assets/icons/png/settings.png',
+                                      'assets/icons/png/shopping.png',
+                                      'assets/icons/png/treadmill.png',
+                                      'assets/icons/png/travel.png',
+                                    ].map<DropdownMenuItem<String>>(
+                                        (String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Container(
+                                          padding: const EdgeInsets.all(2),
+                                          child: Image.asset(value),
+                                        ),
+                                      );
+                                    }).toList(),
+                                  ),
                                 ),
                               ),
-                              Switch(
-                                activeColor: const Color(0xffFFC045),
-                                value: status,
-                                onChanged: (value) {
-                                  setState(() {
-                                    status = value;
-                                  });
-                                },
+                              const SizedBox(height: 16),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 32,
+                                  vertical: 4,
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: const Color(0xffEEEEEE),
+                                ),
+                                child: const TextField(
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    hintText: 'Title',
+                                    hintStyle: TextStyle(
+                                      fontFamily: 'Raleway',
+                                      color: Color.fromARGB(255, 118, 118, 118),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                    floatingLabelAlignment:
+                                        FloatingLabelAlignment.center,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 24),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 32,
+                                  vertical: 4,
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: const Color(0xffEEEEEE),
+                                ),
+                                child: const TextField(
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    hintText: 'Description',
+                                    hintStyle: TextStyle(
+                                      fontFamily: 'Raleway',
+                                      color: Color.fromARGB(255, 118, 118, 118),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                    floatingLabelAlignment:
+                                        FloatingLabelAlignment.center,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 24),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 32,
+                                  vertical: 4,
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: const Color(0xffEEEEEE),
+                                ),
+                                child: const TextField(
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    hintText: 'Date',
+                                    hintStyle: TextStyle(
+                                      fontFamily: 'Raleway',
+                                      color: Color.fromARGB(255, 118, 118, 118),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                    floatingLabelAlignment:
+                                        FloatingLabelAlignment.center,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 24),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 32,
+                                  vertical: 4,
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: const Color(0xffEEEEEE),
+                                ),
+                                child: const TextField(
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    hintText: 'Time',
+                                    hintStyle: TextStyle(
+                                      fontFamily: 'Raleway',
+                                      color: Color.fromARGB(255, 118, 118, 118),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                    floatingLabelAlignment:
+                                        FloatingLabelAlignment.center,
+                                  ),
+                                ),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Text(
+                                    'Turn On Notification',
+                                    style: TextStyle(
+                                      fontFamily: 'Raleway',
+                                      color: Color.fromARGB(255, 82, 82, 82),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  Switch(
+                                    activeColor: const Color(0xffFFC045),
+                                    value: status,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        status = value;
+                                      });
+                                    },
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                width: double.infinity,
+                                height: 60,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    primary: const Color(0xffFFC045),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => const HomePage(),
+                                      ),
+                                    );
+                                  },
+                                  child: const Text(
+                                    'Create Task',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontFamily: 'Raleway',
+                                    ),
+                                  ),
+                                ),
                               ),
                             ],
                           ),
-                          SizedBox(
-                            width: double.infinity,
-                            height: 60,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                primary: const Color(0xffFFC045),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
-                              ),
-                              onPressed: () {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const HomePage(),
-                                  ),
-                                );
-                              },
-                              child: const Text(
-                                'Create Task',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontFamily: 'Raleway',
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
+                    );
+                  },
                 );
               },
             );
