@@ -111,6 +111,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       color: const Color(0xffEEEEEE),
                     ),
                     child: const TextField(
+                      obscureText: true,
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: 'Password',

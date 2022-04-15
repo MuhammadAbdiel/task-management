@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_uts/home_page.dart';
+import 'package:flutter_uts/profile_page.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
@@ -31,7 +32,7 @@ class _EditProfileState extends State<EditProfile> {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const HomePage(),
+                            builder: (context) => const ProfilePage(),
                           ),
                         );
                       },
@@ -135,6 +136,7 @@ class _EditProfileState extends State<EditProfile> {
                             color: const Color(0xffEEEEEE),
                           ),
                           child: const TextField(
+                            obscureText: true,
                             decoration: InputDecoration(
                               border: InputBorder.none,
                               hintText: 'Password',
