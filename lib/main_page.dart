@@ -84,6 +84,7 @@ class MainPage extends StatelessWidget {
                         'Start',
                         style: TextStyle(
                           fontSize: 20,
+                          color: Colors.white,
                           fontFamily: 'Raleway',
                         ),
                       ),

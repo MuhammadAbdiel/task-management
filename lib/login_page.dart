@@ -94,6 +94,7 @@ class LoginPage extends StatelessWidget {
                         'Login',
                         style: TextStyle(
                           fontSize: 20,
+                          color: Colors.white,
                           fontFamily: 'Raleway',
                         ),
                       ),

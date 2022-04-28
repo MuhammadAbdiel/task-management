@@ -201,6 +201,7 @@ class _EditProfileState extends State<EditProfile> {
                               'Save',
                               style: TextStyle(
                                 fontSize: 20,
+                                color: Colors.white,
                                 fontFamily: 'Raleway',
                               ),
                             ),

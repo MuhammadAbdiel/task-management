@@ -177,6 +177,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         'Register',
                         style: TextStyle(
                           fontSize: 20,
+                          color: Colors.white,
                           fontFamily: 'Raleway',
                         ),
                       ),

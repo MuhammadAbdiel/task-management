@@ -1,7 +1,11 @@
+// ignore_for_file: unnecessary_null_comparison
+
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_uts/all_tasks_page.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_uts/profile_page.dart';
+import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -11,8 +15,36 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  TimeOfDay? time;
   var dropdownValue = 'assets/icons/png/alarm-clock.png';
   bool status = false;
+
+  String getText() {
+    if (time == null) {
+      return 'Select Time';
+    } else {
+      final hours = time!.hour.toString().padLeft(2, '0');
+      final minutes = time!.minute.toString().padLeft(2, '0');
+
+      return '$hours:$minutes';
+    }
+  }
+
+  Future pickTime(BuildContext context) async {
+    const initialTime = TimeOfDay(hour: 9, minute: 0);
+    final newTime = await showTimePicker(
+      context: context,
+      initialTime: time ?? initialTime,
+    );
+
+    if (newTime == null) {
+      return;
+    }
+
+    setState(() {
+      time = newTime;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -146,45 +178,64 @@ class _HomePageState extends State<HomePage> {
                                   borderRadius: BorderRadius.circular(20),
                                   color: const Color(0xffEEEEEE),
                                 ),
-                                child: const TextField(
-                                  decoration: InputDecoration(
+                                child: DateTimeField(
+                                  // initialValue: widget.user?.birthday,
+                                  // controller: controllerDate,
+                                  decoration: const InputDecoration(
                                     border: InputBorder.none,
                                     hintText: 'Date',
                                     hintStyle: TextStyle(
                                       fontFamily: 'Raleway',
-                                      color: Color.fromARGB(255, 118, 118, 118),
+                                      color: Color.fromARGB(
+                                        255,
+                                        118,
+                                        118,
+                                        118,
+                                      ),
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,
                                     ),
-                                    floatingLabelAlignment:
-                                        FloatingLabelAlignment.center,
                                   ),
+                                  validator: (dateTime) => dateTime == null
+                                      ? 'Not valid input'
+                                      : null,
+                                  format: DateFormat('yyyy-MM-dd'),
+                                  onShowPicker: (context, currentValue) {
+                                    return showDatePicker(
+                                      context: context,
+                                      firstDate: DateTime(1900),
+                                      lastDate: DateTime(2100),
+                                      initialDate:
+                                          currentValue ?? DateTime.now(),
+                                    );
+                                  },
                                 ),
                               ),
                               const SizedBox(height: 24),
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 32,
-                                  vertical: 4,
-                                ),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: const Color(0xffEEEEEE),
-                                ),
-                                child: const TextField(
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: 'Time',
-                                    hintStyle: TextStyle(
-                                      fontFamily: 'Raleway',
-                                      color: Color.fromARGB(255, 118, 118, 118),
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                    floatingLabelAlignment:
-                                        FloatingLabelAlignment.center,
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  minimumSize: const Size.fromHeight(40),
+                                  primary: const Color(0xffEEEEEE),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(50),
                                   ),
                                 ),
+                                child: FittedBox(
+                                  child: Text(
+                                    getText(),
+                                    style: const TextStyle(
+                                      fontFamily: 'Raleway',
+                                      fontSize: 20,
+                                      color: Color.fromARGB(
+                                        255,
+                                        118,
+                                        118,
+                                        118,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                onPressed: () => pickTime(context),
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -193,7 +244,12 @@ class _HomePageState extends State<HomePage> {
                                     'Turn On Notification',
                                     style: TextStyle(
                                       fontFamily: 'Raleway',
-                                      color: Color.fromARGB(255, 82, 82, 82),
+                                      color: Color.fromARGB(
+                                        255,
+                                        82,
+                                        82,
+                                        82,
+                                      ),
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,
                                     ),
@@ -231,6 +287,7 @@ class _HomePageState extends State<HomePage> {
                                     'Create Task',
                                     style: TextStyle(
                                       fontSize: 20,
+                                      color: Colors.white,
                                       fontFamily: 'Raleway',
                                     ),
                                   ),
@@ -246,7 +303,10 @@ class _HomePageState extends State<HomePage> {
               },
             );
           },
-          child: const Icon(Icons.add),
+          child: const Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
           backgroundColor: const Color(0xffFFC045),
         ),
         bottomNavigationBar: Container(
