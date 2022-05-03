@@ -392,7 +392,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                               InkWell(
                                 onTap: () {
-                                  Navigator.pushReplacement(
+                                  Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
@@ -476,7 +476,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                               InkWell(
                                 onTap: () {
-                                  Navigator.pushReplacement(
+                                  Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>

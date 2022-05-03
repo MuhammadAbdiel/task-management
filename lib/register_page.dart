@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_uts/home_page.dart';
+import 'package:flutter_uts/login.dart';
 import 'package:flutter_uts/login_page.dart';
-// import 'package:toggle_switch/toggle_switch.dart';
-// import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -165,14 +164,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           borderRadius: BorderRadius.circular(50),
                         ),
                       ),
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const HomePage(),
-                          ),
-                        );
-                      },
+                      onPressed: () {},
                       child: const Text(
                         'Register',
                         style: TextStyle(
@@ -199,10 +191,11 @@ class _RegisterPageState extends State<RegisterPage> {
                       const SizedBox(width: 8),
                       InkWell(
                         onTap: () {
-                          Navigator.pushReplacement(
-                            context,
+                          Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => const LoginPage(),
+                              builder: (context) {
+                                return const Login();
+                              },
                             ),
                           );
                         },

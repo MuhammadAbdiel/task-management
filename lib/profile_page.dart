@@ -1,12 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_uts/edit_profile.dart';
 import 'package:flutter_uts/home_page.dart';
+import 'package:flutter_uts/login_page.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser!;
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -22,12 +26,7 @@ class ProfilePage extends StatelessWidget {
                   children: [
                     InkWell(
                       onTap: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const HomePage(),
-                          ),
-                        );
+                        Navigator.pop(context);
                       },
                       child: const Icon(
                         Icons.arrow_back,
@@ -64,41 +63,53 @@ class ProfilePage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: Row(
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
                     children: [
-                      Container(
-                        padding: const EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: Image.asset(
-                          'assets/images/man.png',
-                          height: 50,
-                        ),
-                      ),
-                      const SizedBox(width: 20),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text(
-                            'Muhammad Abdiel Firjatullah',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontFamily: 'Raleway',
-                              color: Color.fromARGB(255, 82, 82, 82),
-                              fontWeight: FontWeight.w700,
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: Image.asset(
+                              'assets/images/man.png',
+                              height: 50,
                             ),
                           ),
-                          Text(
-                            'muhammadabdiel@gmail.com',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontFamily: 'Raleway',
-                              color: Color.fromARGB(255, 82, 82, 82),
-                              fontWeight: FontWeight.w700,
-                            ),
+                          const SizedBox(width: 20),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                user.email! == 'muhammadabdielf@gmail.com'
+                                    ? 'Muhammad Abdiel Firjatullah'
+                                    : user.email! == 'mochraflyh@gmail.com'
+                                        ? 'Mochammad Rafly Herdianto'
+                                        : user.email! == 'mochrofiqi@gmail.com'
+                                            ? 'Moch. Rofiqi'
+                                            : '',
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontFamily: 'Raleway',
+                                  color: Color.fromARGB(255, 82, 82, 82),
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              Text(
+                                user.email!,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontFamily: 'Raleway',
+                                  color: Color.fromARGB(255, 82, 82, 82),
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -110,7 +121,7 @@ class ProfilePage extends StatelessWidget {
                   children: [
                     InkWell(
                       onTap: () {
-                        Navigator.pushReplacement(
+                        Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => const EditProfile(),
@@ -204,7 +215,17 @@ class ProfilePage extends StatelessWidget {
                                   const SizedBox(width: 16),
                                   InkWell(
                                     onTap: () {
-                                      Navigator.pop(context);
+                                      FirebaseAuth.instance
+                                          .signOut()
+                                          .then((value) {
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const LoginPage(),
+                                          ),
+                                        );
+                                      });
                                     },
                                     child: Container(
                                         width: 60,

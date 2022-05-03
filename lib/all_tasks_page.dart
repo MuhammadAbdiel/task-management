@@ -23,12 +23,7 @@ class AllTasksPage extends StatelessWidget {
                   children: [
                     InkWell(
                       onTap: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const HomePage(),
-                          ),
-                        );
+                        Navigator.pop(context);
                       },
                       child: const Icon(
                         Icons.arrow_back,
