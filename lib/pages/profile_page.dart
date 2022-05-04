@@ -1,7 +1,12 @@
+// ignore_for_file: unnecessary_null_comparison, avoid_print
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_uts/google_sign_in_provider.dart';
 import 'package:flutter_uts/pages/edit_profile.dart';
-import 'package:flutter_uts/pages/login_page.dart';
+import 'package:flutter_uts/pages/sign_up.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -84,21 +89,31 @@ class ProfilePage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                user.email! == 'muhammadabdielf@gmail.com'
-                                    ? 'Muhammad Abdiel Firjatullah'
-                                    : user.email! == 'mochraflyh@gmail.com'
-                                        ? 'Mochammad Rafly Herdianto'
-                                        : user.email! == 'mochrofiqi@gmail.com'
-                                            ? 'Moch. Rofiqi'
-                                            : '',
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: 'Raleway',
-                                  color: Color.fromARGB(255, 82, 82, 82),
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
+                              user.displayName == null
+                                  ? Text(
+                                      user.email!.contains('abdiel')
+                                          ? 'Muhammad Abdiel Firjatullah'
+                                          : user.email!.contains('rafly')
+                                              ? 'Mochammad Rafly Herdianto'
+                                              : user.email!.contains('rofiqi')
+                                                  ? 'Moch. Rofiqi'
+                                                  : '',
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        fontFamily: 'Raleway',
+                                        color: Color.fromARGB(255, 82, 82, 82),
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    )
+                                  : Text(
+                                      user.displayName!,
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        fontFamily: 'Raleway',
+                                        color: Color.fromARGB(255, 82, 82, 82),
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
                               Text(
                                 user.email!,
                                 style: const TextStyle(
@@ -214,6 +229,14 @@ class ProfilePage extends StatelessWidget {
                                   const SizedBox(width: 16),
                                   InkWell(
                                     onTap: () {
+                                      final provider =
+                                          Provider.of<GoogleSignInProvider>(
+                                              context,
+                                              listen: false);
+                                      // final GoogleSignIn googleSignIn =
+                                      //     GoogleSignIn();
+
+                                      // await googleSignIn.disconnect();
                                       FirebaseAuth.instance
                                           .signOut()
                                           .then((value) {
@@ -221,10 +244,12 @@ class ProfilePage extends StatelessWidget {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                const LoginPage(),
+                                                const SignUp(),
                                           ),
                                         );
                                       });
+                                      // provider.googleSignOut();
+                                      provider.googleLogout();
                                     },
                                     child: Container(
                                         width: 60,

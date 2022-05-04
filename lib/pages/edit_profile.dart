@@ -14,6 +14,7 @@ class _EditProfileState extends State<EditProfile> {
   List<bool> isSelected = List.generate(2, (_) => false);
 
   final formKey = GlobalKey<FormState>();
+  final nameController = TextEditingController();
   final emailController = TextEditingController();
 
   final user = FirebaseAuth.instance.currentUser!;
@@ -23,6 +24,9 @@ class _EditProfileState extends State<EditProfile> {
     super.initState();
 
     if (user != null) {
+      if (user.displayName != null) {
+        nameController.text = user.displayName!;
+      }
       emailController.text = user.email!;
     }
   }
@@ -92,6 +96,7 @@ class _EditProfileState extends State<EditProfile> {
                               validator: (text) => text != null && text.isEmpty
                                   ? 'Not valid input'
                                   : null,
+                              controller: nameController,
                               decoration: const InputDecoration(
                                 border: InputBorder.none,
                                 hintText: 'First Name',

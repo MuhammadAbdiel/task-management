@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_uts/pages/register_page.dart';
+import 'package:flutter_uts/pages/sign_up.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -76,7 +76,7 @@ class MainPage extends StatelessWidget {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const RegisterPage(),
+                            builder: (context) => const SignUp(),
                           ),
                         );
                       },
