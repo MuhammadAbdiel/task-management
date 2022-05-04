@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_uts/register_page.dart';
+import 'package:flutter_uts/pages/register_page.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({Key? key}) : super(key: key);

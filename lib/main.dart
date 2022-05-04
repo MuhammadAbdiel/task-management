@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_uts/main_page.dart';
-import 'package:flutter_uts/style/theme.dart';
+import 'package:flutter_uts/pages/main_page.dart';
+import 'package:flutter_uts/styles/theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

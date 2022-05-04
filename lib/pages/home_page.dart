@@ -2,9 +2,9 @@
 
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_uts/all_tasks_page.dart';
+import 'package:flutter_uts/pages/all_tasks_page.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:flutter_uts/profile_page.dart';
+import 'package:flutter_uts/pages/profile_page.dart';
 import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
