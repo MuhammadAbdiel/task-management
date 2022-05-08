@@ -1,7 +1,9 @@
 // ignore_for_file: unnecessary_null_comparison
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_uts/models/user_model.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
@@ -14,21 +16,33 @@ class _EditProfileState extends State<EditProfile> {
   List<bool> isSelected = List.generate(2, (_) => false);
 
   final formKey = GlobalKey<FormState>();
-  final nameController = TextEditingController();
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
   final emailController = TextEditingController();
 
   final user = FirebaseAuth.instance.currentUser!;
+  User? userLoggedIn = FirebaseAuth.instance.currentUser!;
+  UserModel userModel = UserModel();
 
   @override
   void initState() {
     super.initState();
 
-    if (user != null) {
-      if (user.displayName != null) {
-        nameController.text = user.displayName!;
-      }
-      emailController.text = user.email!;
-    }
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(userLoggedIn!.uid)
+        .get()
+        .then(
+      (value) {
+        setState(() {
+          userModel = UserModel.fromJson(value.data());
+        });
+      },
+    );
+
+    firstNameController.text = userModel.firstName.toString();
+    lastNameController.text = userModel.lastName.toString();
+    emailController.text = user.email!;
   }
 
   @override
@@ -96,7 +110,7 @@ class _EditProfileState extends State<EditProfile> {
                               validator: (text) => text != null && text.isEmpty
                                   ? 'Not valid input'
                                   : null,
-                              controller: nameController,
+                              controller: firstNameController,
                               decoration: const InputDecoration(
                                 border: InputBorder.none,
                                 hintText: 'First Name',
@@ -122,6 +136,7 @@ class _EditProfileState extends State<EditProfile> {
                               validator: (text) => text != null && text.isEmpty
                                   ? 'Not valid input'
                                   : null,
+                              controller: lastNameController,
                               decoration: const InputDecoration(
                                 border: InputBorder.none,
                                 hintText: 'Last Name (Optional)',
