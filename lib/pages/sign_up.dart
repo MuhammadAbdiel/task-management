@@ -31,9 +31,9 @@ class SignUp extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 100),
-                  _signInButton(context),
+                  const SignInButton(),
                   const SizedBox(height: 8),
-                  _signInButton2(context),
+                  const SignInButton2(),
                 ],
               ),
             ),
@@ -42,8 +42,13 @@ class SignUp extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _signInButton(BuildContext context) {
+class SignInButton extends StatelessWidget {
+  const SignInButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return OutlineButton(
       splashColor: Colors.grey,
       onPressed: () {
@@ -74,7 +79,7 @@ class SignUp extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(left: 10),
               child: Text(
-                'Sign up with Google',
+                'Sign in with Google',
                 style: TextStyle(
                   fontSize: 20,
                   color: Colors.grey,
@@ -86,8 +91,13 @@ class SignUp extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _signInButton2(BuildContext context) {
+class SignInButton2 extends StatelessWidget {
+  const SignInButton2({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return OutlineButton(
       splashColor: Colors.grey,
       onPressed: () {
@@ -111,7 +121,7 @@ class SignUp extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(left: 10),
               child: Text(
-                'Sign up with Email',
+                'Sign in with Email',
                 style: TextStyle(
                   fontSize: 20,
                   color: Colors.grey,

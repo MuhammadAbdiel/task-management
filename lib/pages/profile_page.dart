@@ -1,11 +1,10 @@
-// ignore_for_file: unnecessary_null_comparison, avoid_print
+// ignore_for_file: unnecessary_null_comparison, avoid_print, unrelated_type_equality_checks
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_uts/google_sign_in_provider.dart';
 import 'package:flutter_uts/pages/edit_profile.dart';
 import 'package:flutter_uts/pages/sign_up.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -233,23 +232,23 @@ class ProfilePage extends StatelessWidget {
                                           Provider.of<GoogleSignInProvider>(
                                               context,
                                               listen: false);
-                                      // final GoogleSignIn googleSignIn =
-                                      //     GoogleSignIn();
 
-                                      // await googleSignIn.disconnect();
-                                      FirebaseAuth.instance
-                                          .signOut()
-                                          .then((value) {
-                                        Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const SignUp(),
-                                          ),
-                                        );
-                                      });
-                                      // provider.googleSignOut();
-                                      provider.googleLogout();
+                                      if (provider.googleSignIn.currentUser !=
+                                          null) {
+                                        provider.googleLogout(context);
+                                      } else {
+                                        FirebaseAuth.instance
+                                            .signOut()
+                                            .then((value) {
+                                          Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const SignUp(),
+                                            ),
+                                          );
+                                        });
+                                      }
                                     },
                                     child: Container(
                                         width: 60,
