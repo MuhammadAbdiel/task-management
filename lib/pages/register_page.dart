@@ -38,9 +38,9 @@ class _RegisterPageState extends State<RegisterPage> {
 
     UserModel userModel = UserModel();
     userModel.uid = user!.uid;
+    userModel.email = user.email;
     userModel.firstName = firstNameController.text;
     userModel.lastName = lastNameController.text;
-    userModel.email = emailController.text;
 
     await firebaseFirestore.collection('users').doc(user.uid).set(
           userModel.toJson(),

@@ -36,13 +36,12 @@ class _EditProfileState extends State<EditProfile> {
       (value) {
         setState(() {
           userModel = UserModel.fromJson(value.data());
+          firstNameController.text = userModel.firstName.toString();
+          lastNameController.text = userModel.lastName.toString();
+          emailController.text = user.email!;
         });
       },
     );
-
-    firstNameController.text = userModel.firstName.toString();
-    lastNameController.text = userModel.lastName.toString();
-    emailController.text = user.email!;
   }
 
   @override

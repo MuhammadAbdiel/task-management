@@ -1,18 +1,46 @@
 // ignore_for_file: unnecessary_null_comparison, avoid_print, unrelated_type_equality_checks
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_uts/google_sign_in_provider.dart';
+import 'package:flutter_uts/models/user_model.dart';
 import 'package:flutter_uts/pages/edit_profile.dart';
 import 'package:flutter_uts/pages/sign_up.dart';
 import 'package:provider/provider.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  User? userLoggedIn = FirebaseAuth.instance.currentUser!;
+  UserModel userModel = UserModel();
+
+  @override
+  void initState() {
+    super.initState();
+
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(userLoggedIn!.uid)
+        .get()
+        .then(
+      (value) {
+        setState(() {
+          userModel = UserModel.fromJson(value.data());
+        });
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser!;
+    final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
 
     return Scaffold(
       body: SafeArea(
@@ -88,15 +116,9 @@ class ProfilePage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              user.displayName == null
+                              provider.googleSignIn.currentUser != null
                                   ? Text(
-                                      user.email!.contains('abdiel')
-                                          ? 'Muhammad Abdiel Firjatullah'
-                                          : user.email!.contains('rafly')
-                                              ? 'Mochammad Rafly Herdianto'
-                                              : user.email!.contains('rofiqi')
-                                                  ? 'Moch. Rofiqi'
-                                                  : '',
+                                      user.displayName!,
                                       style: const TextStyle(
                                         fontSize: 16,
                                         fontFamily: 'Raleway',
@@ -105,7 +127,7 @@ class ProfilePage extends StatelessWidget {
                                       ),
                                     )
                                   : Text(
-                                      user.displayName!,
+                                      '${userModel.firstName.toString()} ${userModel.lastName.toString()}',
                                       style: const TextStyle(
                                         fontSize: 16,
                                         fontFamily: 'Raleway',
@@ -132,31 +154,33 @@ class ProfilePage extends StatelessWidget {
                 const SizedBox(height: 48),
                 Column(
                   children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const EditProfile(),
-                          ),
-                        );
-                      },
-                      child: Row(
-                        children: const [
-                          Icon(Icons.person, size: 35),
-                          SizedBox(width: 16),
-                          Text(
-                            'Account',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontFamily: 'Raleway',
-                              color: Color.fromARGB(255, 82, 82, 82),
-                              fontWeight: FontWeight.w700,
+                    provider.googleSignIn.currentUser == null
+                        ? InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const EditProfile(),
+                                ),
+                              );
+                            },
+                            child: Row(
+                              children: const [
+                                Icon(Icons.person, size: 35),
+                                SizedBox(width: 16),
+                                Text(
+                                  'Account',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontFamily: 'Raleway',
+                                    color: Color.fromARGB(255, 82, 82, 82),
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
+                          )
+                        : Container(),
                     const SizedBox(height: 16),
                     InkWell(
                       onTap: () {
@@ -228,11 +252,6 @@ class ProfilePage extends StatelessWidget {
                                   const SizedBox(width: 16),
                                   InkWell(
                                     onTap: () {
-                                      final provider =
-                                          Provider.of<GoogleSignInProvider>(
-                                              context,
-                                              listen: false);
-
                                       if (provider.googleSignIn.currentUser !=
                                           null) {
                                         provider.googleLogout(context);
