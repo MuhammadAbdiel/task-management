@@ -21,6 +21,8 @@ class _RegisterPageState extends State<RegisterPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
+  bool toggleButton = true;
+
   void signUp(String email, String password) async {
     if (formKey.currentState!.validate()) {
       await FirebaseAuth.instance
@@ -41,6 +43,11 @@ class _RegisterPageState extends State<RegisterPage> {
     userModel.email = user.email;
     userModel.firstName = firstNameController.text;
     userModel.lastName = lastNameController.text;
+    if (toggleButton == true) {
+      userModel.gender = 'man';
+    } else {
+      userModel.gender = 'woman';
+    }
 
     await firebaseFirestore.collection('users').doc(user.uid).set(
           userModel.toJson(),
@@ -225,6 +232,12 @@ class _RegisterPageState extends State<RegisterPage> {
                               isSelected[buttonIndex] = true;
                             } else {
                               isSelected[buttonIndex] = false;
+                            }
+
+                            if (index == 0) {
+                              toggleButton = true;
+                            } else {
+                              toggleButton = false;
                             }
                           }
                         });

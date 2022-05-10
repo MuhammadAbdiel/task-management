@@ -12,9 +12,6 @@ Kelas : MI - 2C
 ## Report Progress
 
 <span>
-    <img src="assets/pages/1.png" width="200">
-</span>
-<span>
     <img src="assets/pages/2.png" width="200">
 </span>
 <span>
@@ -37,6 +34,9 @@ Kelas : MI - 2C
 </span>
 <span>
     <img src="assets/pages/9.png" width="200">
+</span>
+<span>
+    <img src="assets/pages/10.png" width="200">
 </span>
 <span>
     <img src="assets/pages/11.png" width="200">
@@ -70,6 +70,18 @@ Kelas : MI - 2C
 </span>
 <span>
     <img src="assets/pages/21.png" width="200">
+</span>
+<span>
+    <img src="assets/pages/22.png" width="200">
+</span>
+<span>
+    <img src="assets/pages/23.png" width="200">
+</span>
+<span>
+    <img src="assets/pages/24.png" width="200">
+</span>
+<span>
+    <img src="assets/pages/25.png" width="200">
 </span>
 
 <a href="https://www.figma.com/proto/lCaX0iwxY5zFsP26M7WF9o/Untitled?node-id=46%3A22&scaling=scale-down&page-id=0%3A1&starting-point-node-id=46%3A2">Prototype Figma</a>

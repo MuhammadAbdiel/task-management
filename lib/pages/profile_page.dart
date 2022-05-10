@@ -106,10 +106,17 @@ class _ProfilePageState extends State<ProfilePage> {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(30),
                             ),
-                            child: Image.asset(
-                              'assets/images/man.png',
-                              height: 50,
-                            ),
+                            child: provider.googleSignIn.currentUser != null
+                                ? Image.asset(
+                                    'assets/images/google.png',
+                                    height: 50,
+                                  )
+                                : Image.asset(
+                                    userModel.gender == 'man'
+                                        ? 'assets/images/man.png'
+                                        : 'assets/images/woman.png',
+                                    height: 50,
+                                  ),
                           ),
                           const SizedBox(width: 20),
                           Column(

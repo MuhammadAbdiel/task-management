@@ -1,11 +1,16 @@
 // ignore_for_file: unnecessary_null_comparison
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_uts/google_sign_in_provider.dart';
+import 'package:flutter_uts/models/user_model.dart';
 import 'package:flutter_uts/pages/all_tasks_page.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_uts/pages/profile_page.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -18,6 +23,29 @@ class _HomePageState extends State<HomePage> {
   TimeOfDay? time;
   var dropdownValue = 'assets/icons/png/alarm-clock.png';
   bool status = false;
+  UserModel userModel = UserModel();
+  User? userLoggedIn = FirebaseAuth.instance.currentUser!;
+
+  @override
+  void initState() {
+    super.initState();
+
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(userLoggedIn!.uid)
+        .get()
+        .then(
+      (value) {
+        if (mounted) {
+          setState(() {
+            userModel = UserModel.fromJson(value.data());
+          });
+        } else {
+          return null;
+        }
+      },
+    );
+  }
 
   String getText() {
     if (time == null) {
@@ -48,6 +76,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
+
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -367,10 +397,17 @@ class _HomePageState extends State<HomePage> {
                                 builder: (context) => const ProfilePage(),
                               ),
                             ),
-                            child: Image.asset(
-                              'assets/images/man.png',
-                              height: 50,
-                            ),
+                            child: provider.googleSignIn.currentUser != null
+                                ? Image.asset(
+                                    'assets/images/google.png',
+                                    height: 50,
+                                  )
+                                : Image.asset(
+                                    userModel.gender == 'man'
+                                        ? 'assets/images/man.png'
+                                        : 'assets/images/woman.png',
+                                    height: 50,
+                                  ),
                           ),
                         ],
                       ),
