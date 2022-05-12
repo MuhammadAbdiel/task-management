@@ -2,6 +2,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_uts/pages/sign_up.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -26,6 +27,8 @@ class GoogleSignInProvider extends ChangeNotifier {
       );
 
       await FirebaseAuth.instance.signInWithCredential(credential);
+    } on PlatformException catch (err) {
+      print(err.toString());
     } catch (e) {
       print(e.toString());
     }
