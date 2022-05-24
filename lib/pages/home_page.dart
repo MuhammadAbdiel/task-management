@@ -25,10 +25,16 @@ class _HomePageState extends State<HomePage> {
   bool status = false;
   UserModel userModel = UserModel();
   User? userLoggedIn = FirebaseAuth.instance.currentUser!;
+  final formKey = GlobalKey<FormState>();
+  late TextEditingController titleController;
+  late TextEditingController descriptionController;
 
   @override
   void initState() {
     super.initState();
+
+    titleController = TextEditingController();
+    descriptionController = TextEditingController();
 
     FirebaseFirestore.instance
         .collection('users')
@@ -100,230 +106,238 @@ class _HomePageState extends State<HomePage> {
                   builder: (context, setState) {
                     return Center(
                       child: SingleChildScrollView(
-                        child: Container(
-                          padding: const EdgeInsets.all(24),
-                          child: Column(
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 10,
-                                  vertical: 8,
-                                ),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: const Color(0xffEEEEEE),
-                                ),
-                                child: DropdownButtonHideUnderline(
-                                  child: DropdownButton<String>(
-                                    iconSize: 0,
-                                    value: dropdownValue,
+                        child: Form(
+                          key: formKey,
+                          child: Container(
+                            padding: const EdgeInsets.all(24),
+                            child: Column(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 10,
+                                    vertical: 8,
+                                  ),
+                                  decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(20),
-                                    dropdownColor: const Color(0xffEEEEEE),
-                                    onChanged: (String? newValue) {
-                                      setState(() {
-                                        dropdownValue = newValue!;
-                                      });
-                                    },
-                                    items: <String>[
-                                      'assets/icons/png/alarm-clock.png',
-                                      'assets/icons/png/breakfast.png',
-                                      'assets/icons/png/celeb.png',
-                                      'assets/icons/png/Lunch.png',
-                                      'assets/icons/png/notepad.png',
-                                      'assets/icons/png/online-learning.png',
-                                      'assets/icons/png/settings.png',
-                                      'assets/icons/png/shopping.png',
-                                      'assets/icons/png/treadmill.png',
-                                      'assets/icons/png/travel.png',
-                                    ].map<DropdownMenuItem<String>>(
-                                        (String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Container(
-                                          padding: const EdgeInsets.all(2),
-                                          child: Image.asset(value),
+                                    color: const Color(0xffEEEEEE),
+                                  ),
+                                  child: DropdownButtonHideUnderline(
+                                    child: DropdownButton<String>(
+                                      iconSize: 0,
+                                      value: dropdownValue,
+                                      borderRadius: BorderRadius.circular(20),
+                                      dropdownColor: const Color(0xffEEEEEE),
+                                      onChanged: (String? newValue) {
+                                        setState(() {
+                                          dropdownValue = newValue!;
+                                        });
+                                      },
+                                      items: <String>[
+                                        'assets/icons/png/alarm-clock.png',
+                                        'assets/icons/png/breakfast.png',
+                                        'assets/icons/png/celeb.png',
+                                        'assets/icons/png/Lunch.png',
+                                        'assets/icons/png/notepad.png',
+                                        'assets/icons/png/online-learning.png',
+                                        'assets/icons/png/settings.png',
+                                        'assets/icons/png/shopping.png',
+                                        'assets/icons/png/treadmill.png',
+                                        'assets/icons/png/travel.png',
+                                      ].map<DropdownMenuItem<String>>(
+                                          (String value) {
+                                        return DropdownMenuItem<String>(
+                                          value: value,
+                                          child: Container(
+                                            padding: const EdgeInsets.all(2),
+                                            child: Image.asset(value),
+                                          ),
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 16),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 32,
+                                    vertical: 4,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: const Color(0xffEEEEEE),
+                                  ),
+                                  child: TextFormField(
+                                    controller: titleController,
+                                    decoration: const InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: 'Title',
+                                      hintStyle: TextStyle(
+                                        fontFamily: 'Raleway',
+                                        color:
+                                            Color.fromARGB(255, 118, 118, 118),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                      floatingLabelAlignment:
+                                          FloatingLabelAlignment.center,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 24),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 32,
+                                    vertical: 4,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: const Color(0xffEEEEEE),
+                                  ),
+                                  child: TextFormField(
+                                    controller: descriptionController,
+                                    decoration: const InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: 'Description',
+                                      hintStyle: TextStyle(
+                                        fontFamily: 'Raleway',
+                                        color:
+                                            Color.fromARGB(255, 118, 118, 118),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                      floatingLabelAlignment:
+                                          FloatingLabelAlignment.center,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 24),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 32,
+                                    vertical: 4,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: const Color(0xffEEEEEE),
+                                  ),
+                                  child: DateTimeField(
+                                    // initialValue: widget.user?.birthday,
+                                    // controller: controllerDate,
+                                    decoration: const InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: 'Date',
+                                      hintStyle: TextStyle(
+                                        fontFamily: 'Raleway',
+                                        color: Color.fromARGB(
+                                          255,
+                                          118,
+                                          118,
+                                          118,
                                         ),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    validator: (dateTime) => dateTime == null
+                                        ? 'Not valid input'
+                                        : null,
+                                    format: DateFormat('yyyy-MM-dd'),
+                                    onShowPicker: (context, currentValue) {
+                                      return showDatePicker(
+                                        context: context,
+                                        firstDate: DateTime(1900),
+                                        lastDate: DateTime(2100),
+                                        initialDate:
+                                            currentValue ?? DateTime.now(),
                                       );
-                                    }).toList(),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: 16),
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 32,
-                                  vertical: 4,
-                                ),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: const Color(0xffEEEEEE),
-                                ),
-                                child: const TextField(
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: 'Title',
-                                    hintStyle: TextStyle(
-                                      fontFamily: 'Raleway',
-                                      color: Color.fromARGB(255, 118, 118, 118),
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                    floatingLabelAlignment:
-                                        FloatingLabelAlignment.center,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: 24),
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 32,
-                                  vertical: 4,
-                                ),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: const Color(0xffEEEEEE),
-                                ),
-                                child: const TextField(
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: 'Description',
-                                    hintStyle: TextStyle(
-                                      fontFamily: 'Raleway',
-                                      color: Color.fromARGB(255, 118, 118, 118),
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                    floatingLabelAlignment:
-                                        FloatingLabelAlignment.center,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: 24),
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 32,
-                                  vertical: 4,
-                                ),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: const Color(0xffEEEEEE),
-                                ),
-                                child: DateTimeField(
-                                  // initialValue: widget.user?.birthday,
-                                  // controller: controllerDate,
-                                  decoration: const InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: 'Date',
-                                    hintStyle: TextStyle(
-                                      fontFamily: 'Raleway',
-                                      color: Color.fromARGB(
-                                        255,
-                                        118,
-                                        118,
-                                        118,
-                                      ),
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  validator: (dateTime) => dateTime == null
-                                      ? 'Not valid input'
-                                      : null,
-                                  format: DateFormat('yyyy-MM-dd'),
-                                  onShowPicker: (context, currentValue) {
-                                    return showDatePicker(
-                                      context: context,
-                                      firstDate: DateTime(1900),
-                                      lastDate: DateTime(2100),
-                                      initialDate:
-                                          currentValue ?? DateTime.now(),
-                                    );
-                                  },
-                                ),
-                              ),
-                              const SizedBox(height: 24),
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  minimumSize: const Size.fromHeight(40),
-                                  primary: const Color(0xffEEEEEE),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50),
-                                  ),
-                                ),
-                                child: FittedBox(
-                                  child: Text(
-                                    getText(),
-                                    style: const TextStyle(
-                                      fontFamily: 'Raleway',
-                                      fontSize: 20,
-                                      color: Color.fromARGB(
-                                        255,
-                                        118,
-                                        118,
-                                        118,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                onPressed: () => pickTime(context),
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Text(
-                                    'Turn On Notification',
-                                    style: TextStyle(
-                                      fontFamily: 'Raleway',
-                                      color: Color.fromARGB(
-                                        255,
-                                        82,
-                                        82,
-                                        82,
-                                      ),
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  Switch(
-                                    activeColor: const Color(0xffFFC045),
-                                    value: status,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        status = value;
-                                      });
                                     },
                                   ),
-                                ],
-                              ),
-                              SizedBox(
-                                width: double.infinity,
-                                height: 60,
-                                child: ElevatedButton(
+                                ),
+                                const SizedBox(height: 24),
+                                ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    primary: const Color(0xffFFC045),
+                                    minimumSize: const Size.fromHeight(40),
+                                    primary: const Color(0xffEEEEEE),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(50),
                                     ),
                                   ),
-                                  onPressed: () {
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => const HomePage(),
+                                  child: FittedBox(
+                                    child: Text(
+                                      getText(),
+                                      style: const TextStyle(
+                                        fontFamily: 'Raleway',
+                                        fontSize: 20,
+                                        color: Color.fromARGB(
+                                          255,
+                                          118,
+                                          118,
+                                          118,
+                                        ),
                                       ),
-                                    );
-                                  },
-                                  child: const Text(
-                                    'Create Task',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.white,
-                                      fontFamily: 'Raleway',
+                                    ),
+                                  ),
+                                  onPressed: () => pickTime(context),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Text(
+                                      'Turn On Notification',
+                                      style: TextStyle(
+                                        fontFamily: 'Raleway',
+                                        color: Color.fromARGB(
+                                          255,
+                                          82,
+                                          82,
+                                          82,
+                                        ),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    Switch(
+                                      activeColor: const Color(0xffFFC045),
+                                      value: status,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          status = value;
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  width: double.infinity,
+                                  height: 60,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      primary: const Color(0xffFFC045),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(50),
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const HomePage(),
+                                        ),
+                                      );
+                                    },
+                                    child: const Text(
+                                      'Create Task',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        color: Colors.white,
+                                        fontFamily: 'Raleway',
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
