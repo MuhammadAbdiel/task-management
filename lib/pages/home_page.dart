@@ -1,10 +1,11 @@
-// ignore_for_file: unnecessary_null_comparison
+// ignore_for_file: unnecessary_null_comparison, prefer_if_null_operators
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_uts/google_sign_in_provider.dart';
+import 'package:flutter_uts/models/task_model.dart';
 import 'package:flutter_uts/models/user_model.dart';
 import 'package:flutter_uts/pages/all_tasks_page.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -13,7 +14,9 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  final TaskModel? task;
+
+  const HomePage({Key? key, this.task}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -28,6 +31,9 @@ class _HomePageState extends State<HomePage> {
   final formKey = GlobalKey<FormState>();
   late TextEditingController titleController;
   late TextEditingController descriptionController;
+  late TextEditingController dateController;
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -35,6 +41,7 @@ class _HomePageState extends State<HomePage> {
 
     titleController = TextEditingController();
     descriptionController = TextEditingController();
+    dateController = TextEditingController();
 
     FirebaseFirestore.instance
         .collection('users')
@@ -81,12 +88,119 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void dispose() {
+    titleController.dispose();
+    descriptionController.dispose();
+    dateController.dispose();
+
+    super.dispose();
+  }
+
+  Future createTask(TaskModel task) async {
+    final docTask = FirebaseFirestore.instance.collection('tasks').doc();
+    task.id = docTask.id;
+
+    final json = task.toJson();
+    await docTask.set(json);
+  }
+
+  Stream<List<TaskModel>> readTasks() {
+    return FirebaseFirestore.instance.collection('tasks').snapshots().map(
+          (snapshot) => snapshot.docs
+              .map(
+                (doc) => TaskModel.fromJson(
+                  doc.data(),
+                ),
+              )
+              .toList(),
+        );
+  }
+
+  Widget buildTasks() {
+    return StreamBuilder<List<TaskModel>>(
+      stream: readTasks(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else if (snapshot.hasData) {
+          final tasks = snapshot.data!;
+          return ListView(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            children: tasks.map(buildTask).toList(),
+          );
+        } else {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
+    );
+  }
+
+  Widget buildTask(TaskModel task) {
+    return Column(
+      children: [
+        Container(
+          width: double.infinity,
+          height: 65,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            color: const Color.fromARGB(200, 255, 192, 69),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                spreadRadius: 5,
+                blurRadius: 15,
+                offset: const Offset(0, 10),
+              ),
+            ],
+          ),
+          child: Row(
+            children: [
+              Image.asset(
+                task.image != null
+                    ? 'assets/icons/png/activities.png'
+                    : task.image,
+                height: 35,
+              ),
+              const SizedBox(width: 20),
+              Text(
+                task.title,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontFamily: 'Raleway',
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const Spacer(),
+              const Text(
+                '01:00 PM',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: 'Raleway',
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 24),
+      ],
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
 
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        key: _scaffoldKey,
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             showModalBottomSheet<void>(
@@ -130,6 +244,13 @@ class _HomePageState extends State<HomePage> {
                                       onChanged: (String? newValue) {
                                         setState(() {
                                           dropdownValue = newValue!;
+                                        });
+                                        // Store value of dropdown in firebase
+                                        FirebaseFirestore.instance
+                                            .collection('tasks')
+                                            .doc(widget.task?.id)
+                                            .update({
+                                          'image': newValue!,
                                         });
                                       },
                                       items: <String>[
@@ -221,8 +342,8 @@ class _HomePageState extends State<HomePage> {
                                     color: const Color(0xffEEEEEE),
                                   ),
                                   child: DateTimeField(
-                                    // initialValue: widget.user?.birthday,
-                                    // controller: controllerDate,
+                                    initialValue: widget.task?.date,
+                                    controller: dateController,
                                     decoration: const InputDecoration(
                                       border: InputBorder.none,
                                       hintText: 'Date',
@@ -318,13 +439,31 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                     ),
                                     onPressed: () {
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const HomePage(),
+                                      final task = TaskModel(
+                                        id: widget.task?.id ?? '',
+                                        title: titleController.text,
+                                        description: descriptionController.text,
+                                        date:
+                                            DateTime.parse(dateController.text),
+                                      );
+
+                                      createTask(task);
+
+                                      final snackBar = SnackBar(
+                                        backgroundColor: Colors.green,
+                                        content: Text(
+                                          'Added ${titleController.text} to Firebase!',
+                                          style: const TextStyle(
+                                            fontFamily: 'Raleway',
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600,
+                                          ),
                                         ),
                                       );
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(snackBar);
+
+                                      Navigator.pop(context);
                                     },
                                     child: const Text(
                                       'Create Task',
@@ -464,49 +603,7 @@ class _HomePageState extends State<HomePage> {
                             ],
                           ),
                           const SizedBox(height: 24),
-                          Container(
-                            width: double.infinity,
-                            height: 65,
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: const Color.fromARGB(200, 255, 192, 69),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.1),
-                                  spreadRadius: 5,
-                                  blurRadius: 15,
-                                  offset: const Offset(0, 10),
-                                ),
-                              ],
-                            ),
-                            child: Row(
-                              children: [
-                                Image.asset('assets/icons/png/Lunch.png',
-                                    height: 35),
-                                const SizedBox(width: 20),
-                                const Text(
-                                  'Lunch',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontFamily: 'Raleway',
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                const Spacer(),
-                                const Text(
-                                  '01:00 PM',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontFamily: 'Raleway',
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                          buildTasks(),
                         ],
                       ),
                       const SizedBox(height: 64),
