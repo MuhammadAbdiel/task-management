@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_uts/models/task_model.dart';
+import 'package:flutter_uts/pages/tasks_page.dart';
 
 class AllTasksPage extends StatefulWidget {
   const AllTasksPage({Key? key}) : super(key: key);
@@ -62,6 +63,23 @@ class _AllTasksPageState extends State<AllTasksPage> {
     return Column(
       children: [
         Slidable(
+          startActionPane: ActionPane(
+            motion: const ScrollMotion(),
+            children: [
+              SlidableAction(
+                onPressed: (context) {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => TasksPage(task: task),
+                    ),
+                  );
+                },
+                foregroundColor: Colors.grey,
+                backgroundColor: const Color.fromARGB(0, 0, 0, 255),
+                icon: Icons.edit,
+              ),
+            ],
+          ),
           endActionPane: ActionPane(
             motion: const ScrollMotion(),
             children: [
@@ -206,7 +224,7 @@ class _AllTasksPageState extends State<AllTasksPage> {
             child: Row(
               children: [
                 Image.asset(
-                  task.image != null
+                  task.image == ''
                       ? 'assets/icons/png/activities.png'
                       : task.image,
                   height: 35,
@@ -235,9 +253,9 @@ class _AllTasksPageState extends State<AllTasksPage> {
                       ),
                     ),
                     const SizedBox(height: 4),
-                    const Text(
-                      '06:30 AM',
-                      style: TextStyle(
+                    Text(
+                      task.time == '' ? '00:00' : task.time,
+                      style: const TextStyle(
                         fontSize: 16,
                         fontFamily: 'Raleway',
                         color: Colors.white,
