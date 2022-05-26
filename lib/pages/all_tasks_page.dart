@@ -1,15 +1,28 @@
 // ignore_for_file: unnecessary_null_comparison
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_uts/models/task_model.dart';
 
-class AllTasksPage extends StatelessWidget {
+class AllTasksPage extends StatefulWidget {
   const AllTasksPage({Key? key}) : super(key: key);
 
+  @override
+  State<AllTasksPage> createState() => _AllTasksPageState();
+}
+
+class _AllTasksPageState extends State<AllTasksPage> {
+  User? userLoggedIn = FirebaseAuth.instance.currentUser!;
+
   Stream<List<TaskModel>> readTasks() {
-    return FirebaseFirestore.instance.collection('tasks').snapshots().map(
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(userLoggedIn!.uid)
+        .collection('tasks')
+        .snapshots()
+        .map(
           (snapshot) => snapshot.docs
               .map(
                 (doc) => TaskModel.fromJson(
@@ -49,17 +62,6 @@ class AllTasksPage extends StatelessWidget {
     return Column(
       children: [
         Slidable(
-          startActionPane: ActionPane(
-            motion: const ScrollMotion(),
-            children: [
-              SlidableAction(
-                onPressed: (context) {},
-                foregroundColor: Colors.grey,
-                backgroundColor: const Color.fromARGB(0, 0, 0, 255),
-                icon: Icons.edit,
-              ),
-            ],
-          ),
           endActionPane: ActionPane(
             motion: const ScrollMotion(),
             children: [
@@ -133,6 +135,8 @@ class AllTasksPage extends StatelessWidget {
                             InkWell(
                               onTap: () {
                                 FirebaseFirestore.instance
+                                    .collection('users')
+                                    .doc(userLoggedIn!.uid)
                                     .collection('tasks')
                                     .doc(task.id)
                                     .delete();
