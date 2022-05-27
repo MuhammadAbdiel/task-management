@@ -284,6 +284,8 @@ class _RegisterPageState extends State<RegisterPage> {
                         const SizedBox(width: 8),
                         InkWell(
                           onTap: () {
+                            // ! Solusi dari Error HomePage
+                            // FirebaseAuth.instance.signOut();
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) {

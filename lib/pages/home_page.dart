@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_null_comparison, prefer_if_null_operators, avoid_print
+// ignore_for_file: unnecessary_null_comparison, prefer_if_null_operators, avoid_print, unnecessary_null_in_if_null_operators
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -21,7 +21,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   UserModel userModel = UserModel();
-  User? userLoggedIn = FirebaseAuth.instance.currentUser!;
+  User? userLoggedIn = FirebaseAuth.instance.currentUser ?? null;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -485,6 +485,11 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
 
+    // ! Errornya ada dibaris ini
+
+    // final googleName = provider.googleSignIn.currentUser!.displayName;
+    // var nameSplit = googleName!.split(' ');
+
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -545,15 +550,28 @@ class _HomePageState extends State<HomePage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
-                            'Hello, Bro',
-                            style: TextStyle(
-                              fontFamily: 'Raleway',
-                              fontSize: 28,
-                              fontWeight: FontWeight.w600,
-                              color: Color(0xff3F3F3F),
-                            ),
-                          ),
+                          provider.googleSignIn.currentUser != null
+                              ? const Text(
+                                  // 'Hello, ${nameSplit[0]}',
+                                  'Hello, User',
+                                  style: TextStyle(
+                                    fontFamily: 'Raleway',
+                                    fontSize: 28,
+                                    fontWeight: FontWeight.w600,
+                                    color: Color(0xff3F3F3F),
+                                  ),
+                                )
+                              : Text(
+                                  userModel.gender == 'man'
+                                      ? 'Hello, Bro'
+                                      : 'Hello, Sis',
+                                  style: const TextStyle(
+                                    fontFamily: 'Raleway',
+                                    fontSize: 28,
+                                    fontWeight: FontWeight.w600,
+                                    color: Color(0xff3F3F3F),
+                                  ),
+                                ),
                           InkWell(
                             onTap: () => Navigator.push(
                               context,

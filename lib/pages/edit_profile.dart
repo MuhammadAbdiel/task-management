@@ -95,7 +95,23 @@ class _EditProfileState extends State<EditProfile> {
                     child: Center(
                       child: Column(
                         children: [
-                          const SizedBox(height: 36),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 8,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: const Color(0xffEEEEEE),
+                            ),
+                            child: Image.asset(
+                              userModel.gender == 'man'
+                                  ? 'assets/images/man.png'
+                                  : 'assets/images/woman.png',
+                              height: 100,
+                            ),
+                          ),
+                          const SizedBox(height: 48),
                           Container(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 32,
@@ -146,62 +162,6 @@ class _EditProfileState extends State<EditProfile> {
                                 ),
                               ),
                             ),
-                          ),
-                          const SizedBox(height: 18),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 32,
-                              vertical: 8,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: const Color(0xffEEEEEE),
-                            ),
-                            child: TextFormField(
-                              validator: (text) => text != null && text.isEmpty
-                                  ? 'Not valid input'
-                                  : null,
-                              controller: emailController,
-                              decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                hintText: 'Email',
-                                hintStyle: TextStyle(
-                                  fontFamily: 'Raleway',
-                                  color: Color.fromARGB(255, 118, 118, 118),
-                                  fontSize: 20,
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 18),
-                          const SizedBox(height: 8),
-                          ToggleButtons(
-                            borderRadius: BorderRadius.circular(20),
-                            fillColor: const Color(0xffFFC045).withOpacity(0.8),
-                            children: <Widget>[
-                              Image.asset(
-                                'assets/images/man.png',
-                                height: 50,
-                              ),
-                              Image.asset(
-                                'assets/images/woman.png',
-                                height: 50,
-                              ),
-                            ],
-                            onPressed: (int index) {
-                              setState(() {
-                                for (int buttonIndex = 0;
-                                    buttonIndex < isSelected.length;
-                                    buttonIndex++) {
-                                  if (buttonIndex == index) {
-                                    isSelected[buttonIndex] = true;
-                                  } else {
-                                    isSelected[buttonIndex] = false;
-                                  }
-                                }
-                              });
-                            },
-                            isSelected: isSelected,
                           ),
                           const SizedBox(height: 100),
                           SizedBox(
