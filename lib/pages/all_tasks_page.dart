@@ -22,6 +22,7 @@ class _AllTasksPageState extends State<AllTasksPage> {
         .collection('users')
         .doc(userLoggedIn!.uid)
         .collection('tasks')
+        .orderBy('date', descending: false)
         .snapshots()
         .map(
           (snapshot) => snapshot.docs
