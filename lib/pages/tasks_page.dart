@@ -239,16 +239,18 @@ class _TasksPageState extends State<TasksPage> {
                             valueImage = 'assets/icons/png/travel.png';
                           }
 
-                          FirebaseFirestore.instance
-                              .collection('users')
-                              .doc(userLoggedIn!.uid)
-                              .collection('tasks')
-                              .doc(widget.task?.id)
-                              .update(
-                            {
-                              'image': valueImage,
-                            },
-                          );
+                          if (widget.task != null) {
+                            FirebaseFirestore.instance
+                                .collection('users')
+                                .doc(userLoggedIn!.uid)
+                                .collection('tasks')
+                                .doc(widget.task?.id)
+                                .update(
+                              {
+                                'image': valueImage,
+                              },
+                            );
+                          }
                         },
                         items: <String>[
                           'assets/icons/png/activities.png',
