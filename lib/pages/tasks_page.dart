@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -202,56 +204,47 @@ class _TasksPageState extends State<TasksPage> {
                         value: dropdownValue,
                         borderRadius: BorderRadius.circular(20),
                         dropdownColor: const Color(0xffEEEEEE),
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            dropdownValue = newValue!;
-                          });
+                        onChanged: isEditing
+                            ? null
+                            : (String? newValue) {
+                                setState(() {
+                                  dropdownValue = newValue!;
+                                });
 
-                          if (dropdownValue ==
-                              'assets/icons/png/alarm-clock.png') {
-                            valueImage = 'assets/icons/png/alarm-clock.png';
-                          } else if (dropdownValue ==
-                              'assets/icons/png/breakfast.png') {
-                            valueImage = 'assets/icons/png/breakfast.png';
-                          } else if (dropdownValue ==
-                              'assets/icons/png/celeb.png') {
-                            valueImage = 'assets/icons/png/celeb.png';
-                          } else if (dropdownValue ==
-                              'assets/icons/png/Lunch.png') {
-                            valueImage = 'assets/icons/png/Lunch.png';
-                          } else if (dropdownValue ==
-                              'assets/icons/png/notepad.png') {
-                            valueImage = 'assets/icons/png/notepad.png';
-                          } else if (dropdownValue ==
-                              'assets/icons/png/online-learning.png') {
-                            valueImage = 'assets/icons/png/online-learning.png';
-                          } else if (dropdownValue ==
-                              'assets/icons/png/settings.png') {
-                            valueImage = 'assets/icons/png/settings.png';
-                          } else if (dropdownValue ==
-                              'assets/icons/png/shopping.png') {
-                            valueImage = 'assets/icons/png/shopping.png';
-                          } else if (dropdownValue ==
-                              'assets/icons/png/treadmill.png') {
-                            valueImage = 'assets/icons/png/treadmill.png';
-                          } else if (dropdownValue ==
-                              'assets/icons/png/travel.png') {
-                            valueImage = 'assets/icons/png/travel.png';
-                          }
-
-                          if (widget.task != null) {
-                            FirebaseFirestore.instance
-                                .collection('users')
-                                .doc(userLoggedIn!.uid)
-                                .collection('tasks')
-                                .doc(widget.task?.id)
-                                .update(
-                              {
-                                'image': valueImage,
+                                if (dropdownValue ==
+                                    'assets/icons/png/alarm-clock.png') {
+                                  valueImage =
+                                      'assets/icons/png/alarm-clock.png';
+                                } else if (dropdownValue ==
+                                    'assets/icons/png/breakfast.png') {
+                                  valueImage = 'assets/icons/png/breakfast.png';
+                                } else if (dropdownValue ==
+                                    'assets/icons/png/celeb.png') {
+                                  valueImage = 'assets/icons/png/celeb.png';
+                                } else if (dropdownValue ==
+                                    'assets/icons/png/Lunch.png') {
+                                  valueImage = 'assets/icons/png/Lunch.png';
+                                } else if (dropdownValue ==
+                                    'assets/icons/png/notepad.png') {
+                                  valueImage = 'assets/icons/png/notepad.png';
+                                } else if (dropdownValue ==
+                                    'assets/icons/png/online-learning.png') {
+                                  valueImage =
+                                      'assets/icons/png/online-learning.png';
+                                } else if (dropdownValue ==
+                                    'assets/icons/png/settings.png') {
+                                  valueImage = 'assets/icons/png/settings.png';
+                                } else if (dropdownValue ==
+                                    'assets/icons/png/shopping.png') {
+                                  valueImage = 'assets/icons/png/shopping.png';
+                                } else if (dropdownValue ==
+                                    'assets/icons/png/treadmill.png') {
+                                  valueImage = 'assets/icons/png/treadmill.png';
+                                } else if (dropdownValue ==
+                                    'assets/icons/png/travel.png') {
+                                  valueImage = 'assets/icons/png/travel.png';
+                                }
                               },
-                            );
-                          }
-                        },
                         items: <String>[
                           'assets/icons/png/activities.png',
                           'assets/icons/png/alarm-clock.png',
@@ -418,10 +411,14 @@ class _TasksPageState extends State<TasksPage> {
                       ),
                       Switch(
                         activeColor: const Color(0xffFFC045),
-                        value: status,
+                        value: isEditing
+                            ? widget.task!.turnOnNotification
+                            : status,
                         onChanged: (value) {
                           setState(() {
-                            status = value;
+                            isEditing
+                                ? widget.task!.turnOnNotification = value
+                                : status = value;
                           });
                         },
                       ),
@@ -439,14 +436,37 @@ class _TasksPageState extends State<TasksPage> {
                         ),
                       ),
                       onPressed: () {
-                        final task = TaskModel(
-                          id: widget.task?.id ?? '',
-                          image: valueImage,
-                          title: titleController.text,
-                          description: descriptionController.text,
-                          date: DateTime.parse(dateController.text),
-                          time: getText(),
+                        TaskModel task = TaskModel(
+                          id: '',
+                          image: '',
+                          title: '',
+                          description: '',
+                          date: DateTime.parse('0000-00-00'),
+                          time: '',
+                          turnOnNotification: false,
                         );
+
+                        if (isEditing) {
+                          task = TaskModel(
+                            id: widget.task?.id ?? '',
+                            image: widget.task!.image,
+                            title: titleController.text,
+                            description: descriptionController.text,
+                            date: DateTime.parse(dateController.text),
+                            time: getText(),
+                            turnOnNotification: widget.task!.turnOnNotification,
+                          );
+                        } else {
+                          task = TaskModel(
+                            id: widget.task?.id ?? '',
+                            image: valueImage,
+                            title: titleController.text,
+                            description: descriptionController.text,
+                            date: DateTime.parse(dateController.text),
+                            time: getText(),
+                            turnOnNotification: status,
+                          );
+                        }
 
                         if (isEditing) {
                           updateTask(task);
@@ -458,7 +478,7 @@ class _TasksPageState extends State<TasksPage> {
                         final snackBar = SnackBar(
                           backgroundColor: Colors.green,
                           content: Text(
-                            '$action ${titleController.text} to Firebase!',
+                            '${titleController.text} $action successfully',
                             style: const TextStyle(
                               fontFamily: 'Raleway',
                               fontSize: 16,

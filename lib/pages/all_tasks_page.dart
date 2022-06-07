@@ -163,7 +163,7 @@ class _AllTasksPageState extends State<AllTasksPage> {
                                 const snackBar = SnackBar(
                                   backgroundColor: Colors.green,
                                   content: Text(
-                                    'Deleted from Firebase!',
+                                    'Task Deleted Successfully',
                                     style: TextStyle(
                                       fontFamily: 'Raleway',
                                       fontSize: 16,

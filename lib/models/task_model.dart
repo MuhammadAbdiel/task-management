@@ -7,7 +7,7 @@ class TaskModel {
   final String description;
   final DateTime date;
   String time;
-  // bool turnOnNotification;
+  bool turnOnNotification;
 
   TaskModel({
     this.id = '',
@@ -16,7 +16,7 @@ class TaskModel {
     required this.description,
     required this.date,
     this.time = '',
-    // this.turnOnNotification = false,
+    this.turnOnNotification = false,
   });
 
   static TaskModel fromJson(Map<String, dynamic> json) {
@@ -27,7 +27,7 @@ class TaskModel {
       description: json["description"],
       date: (json['date'] as Timestamp).toDate(),
       time: json['time'],
-      // turnOnNotification: json['turnOnNotification'],
+      turnOnNotification: json['turnOnNotification'],
     );
   }
 
@@ -39,7 +39,7 @@ class TaskModel {
       "description": description,
       'date': date,
       'time': time,
-      // 'turnOnNotification': turnOnNotification,
+      'turnOnNotification': turnOnNotification,
     };
   }
 }
