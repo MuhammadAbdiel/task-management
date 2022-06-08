@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_uts/models/user_model.dart';
 
 class EditProfile extends StatefulWidget {
-  const EditProfile({Key? key}) : super(key: key);
+  final UserModel? editUser;
+
+  const EditProfile({Key? key, this.editUser}) : super(key: key);
 
   @override
   State<EditProfile> createState() => _EditProfileState();
@@ -42,6 +44,16 @@ class _EditProfileState extends State<EditProfile> {
         });
       },
     );
+  }
+
+  updateProfile() async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? user = FirebaseAuth.instance.currentUser!;
+
+    await firebaseFirestore.collection('users').doc(user.uid).update({
+      'firstName': firstNameController.text,
+      'lastName': lastNameController.text
+    });
   }
 
   @override
@@ -175,12 +187,23 @@ class _EditProfileState extends State<EditProfile> {
                                 ),
                               ),
                               onPressed: () {
-                                // Navigator.pushReplacement(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //     builder: (context) => const HomePage(),
-                                //   ),
-                                // );
+                                updateProfile();
+
+                                const snackBar = SnackBar(
+                                  backgroundColor: Colors.green,
+                                  content: Text(
+                                    'Profile Updated successfully',
+                                    style: TextStyle(
+                                      fontFamily: 'Raleway',
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                );
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
+
+                                Navigator.pop(context);
                               },
                               child: const Text(
                                 'Save',

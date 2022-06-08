@@ -80,9 +80,6 @@ Kelas : MI - 2C
 <span>
     <img src="assets/pages/24.png" width="200">
 </span>
-<span>
-    <img src="assets/pages/25.png" width="200">
-</span>
 
 <a href="https://www.figma.com/proto/lCaX0iwxY5zFsP26M7WF9o/Untitled?node-id=46%3A22&scaling=scale-down&page-id=0%3A1&starting-point-node-id=46%3A2">Prototype Figma</a>
 
