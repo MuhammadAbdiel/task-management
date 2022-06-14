@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_uts/models/task_model.dart';
 import 'package:flutter_uts/models/user_model.dart';
+import 'package:flutter_uts/service/notification_service.dart';
 import 'package:intl/intl.dart';
 
 class TasksPage extends StatefulWidget {
@@ -472,6 +473,17 @@ class _TasksPageState extends State<TasksPage> {
                           updateTask(task);
                         } else {
                           createTask(task);
+                        }
+
+                        if (task.turnOnNotification) {
+                          NotificationService.showScheduleNotification(
+                            title: task.description,
+                            body: task.time,
+                            payload: task.id,
+                            scheduleDate: task.date.add(
+                              const Duration(seconds: 5),
+                            ),
+                          );
                         }
 
                         final action = isEditing ? 'Edited' : 'Added';

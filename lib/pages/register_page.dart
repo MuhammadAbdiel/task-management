@@ -139,7 +139,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             : null,
                         decoration: const InputDecoration(
                           border: InputBorder.none,
-                          hintText: 'Last Name (Optional)',
+                          hintText: 'Last Name',
                           hintStyle: TextStyle(
                             fontFamily: 'Raleway',
                             color: Color.fromARGB(255, 118, 118, 118),
