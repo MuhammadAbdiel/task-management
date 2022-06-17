@@ -47,16 +47,15 @@ class _ProfilePageState extends State<ProfilePage> {
         child: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.only(
-              top: 32,
-              right: 24,
-              left: 24,
+              top: 32, right: 24, left: 24,
             ),
             child: Column(
               children: [
                 Row(
                   children: [
                     InkWell(
-                      onTap: () {
+                      onTap: () 
+                      {
                         Navigator.pop(context);
                       },
                       child: const Icon(

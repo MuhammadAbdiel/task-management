@@ -475,16 +475,16 @@ class _TasksPageState extends State<TasksPage> {
                           createTask(task);
                         }
 
-                        if (task.turnOnNotification) {
-                          NotificationService.showScheduleNotification(
-                            title: task.description,
-                            body: task.time,
-                            payload: task.id,
-                            scheduleDate: task.date.add(
-                              const Duration(seconds: 5),
-                            ),
-                          );
-                        }
+                        // if (task.turnOnNotification) {
+                        //   NotificationService.showScheduleNotification(
+                        //     title: task.description,
+                        //     body: task.time,
+                        //     payload: task.id,
+                        //     scheduleDate: task.date.add(
+                        //       const Duration(seconds: 5),
+                        //     ),
+                        //   );
+                        // }
 
                         final action = isEditing ? 'Edited' : 'Added';
                         final snackBar = SnackBar(
