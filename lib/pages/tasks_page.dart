@@ -1,12 +1,13 @@
-// ignore_for_file: unnecessary_null_comparison
+// ignore_for_file: unnecessary_null_comparison, avoid_print
 
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_uts/models/task_model.dart';
 import 'package:flutter_uts/models/user_model.dart';
-import 'package:flutter_uts/service/notification_service.dart';
 import 'package:intl/intl.dart';
 
 class TasksPage extends StatefulWidget {
@@ -469,21 +470,35 @@ class _TasksPageState extends State<TasksPage> {
                           );
                         }
 
+                        final re = RegExp(r'T*');
+                        final dateSplit = task.date.toIso8601String().split(re);
+                        final timeSplit = task.time.split(re);
+
                         if (isEditing) {
                           updateTask(task);
                         } else {
                           createTask(task);
                         }
 
+                        final year = int.parse(
+                            '${dateSplit[0]}${dateSplit[1]}${dateSplit[2]}${dateSplit[3]}');
+                        final month =
+                            int.parse('${dateSplit[5]}${dateSplit[6]}');
+                        final date =
+                            int.parse('${dateSplit[8]}${dateSplit[9]}');
+                        final hour =
+                            int.parse('${timeSplit[0]}${timeSplit[1]}');
+                        final minute =
+                            int.parse('${timeSplit[3]}${timeSplit[4]}');
+
                         if (task.turnOnNotification) {
-                          NotificationService.showScheduleNotification(
-                            title: task.description,
-                            body: task.time,
-                            payload: task.id,
-                            scheduleDate: task.date.add(
-                              const Duration(seconds: 5),
-                            ),
+                          AndroidAlarmManager.oneShotAt(
+                            DateTime(year, month, date, hour, minute, 00),
+                            1,
+                            fireAlarm,
                           );
+                        } else {
+                          AndroidAlarmManager.cancel(1);
                         }
 
                         final action = isEditing ? 'Edited' : 'Added';
@@ -520,4 +535,53 @@ class _TasksPageState extends State<TasksPage> {
       ),
     );
   }
+}
+
+void setNotification() async {
+  print('Alaram Tiggered trigger notification set');
+
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+  const initializationSettingsAndroid =
+      AndroidInitializationSettings('mipmap/ic_launcher');
+  const initializationSettingsIOS = IOSInitializationSettings();
+
+  const initializationSettings = InitializationSettings(
+    android: initializationSettingsAndroid,
+    iOS: initializationSettingsIOS,
+  );
+
+  flutterLocalNotificationsPlugin.initialize(
+    initializationSettings,
+    onSelectNotification: (payload) async {
+      print("selected notification");
+    },
+  );
+
+  const androidPlatformChannelSpecifics = AndroidNotificationDetails(
+    'your channel id',
+    'your channel name',
+    'your channel description',
+    importance: Importance.max,
+    priority: Priority.high,
+    ticker: 'ticker',
+  );
+  const iOSPlatformChannelSpecifics = IOSNotificationDetails();
+  const platformChannelSpecifics = NotificationDetails(
+    android: androidPlatformChannelSpecifics,
+    iOS: iOSPlatformChannelSpecifics,
+  );
+
+  await flutterLocalNotificationsPlugin.show(
+    1,
+    'Notification',
+    'Task Schedule',
+    platformChannelSpecifics,
+    payload: DateTime.now().toString(),
+  );
+}
+
+void fireAlarm() {
+  print('Alarm Fired at ${DateTime.now()}');
+  setNotification();
 }

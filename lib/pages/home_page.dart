@@ -643,7 +643,7 @@ class _HomePageState extends State<HomePage> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               const Text(
-                                'Upcoming Tasks',
+                                'Other Tasks',
                                 style: TextStyle(
                                   fontFamily: 'Raleway',
                                   fontSize: 20,

@@ -1,9 +1,8 @@
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_uts/google_sign_in_provider.dart';
-import 'package:flutter_uts/pages/home_page.dart';
 import 'package:flutter_uts/pages/main_page.dart';
-import 'package:flutter_uts/service/notification_service.dart';
 import 'package:flutter_uts/styles/theme.dart';
 import 'package:provider/provider.dart';
 
@@ -12,18 +11,30 @@ Future<void> main() async {
   await Firebase.initializeApp();
 
   runApp(const MyApp());
+  await AndroidAlarmManager.initialize();
 }
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (context) => GoogleSignInProvider(),
+      child: MaterialApp(
+        navigatorKey: navigatorKey,
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: primaryColor,
+        ),
+        home: const MainPage(),
+      ),
+    );
+  }
 }
 
-class _MyAppState extends State<MyApp> {
   // @override
   // void initState() {
   //   super.initState();
@@ -42,19 +53,3 @@ class _MyAppState extends State<MyApp> {
   //     ),
   //   );
   // }
-
-  @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => GoogleSignInProvider(),
-      child: MaterialApp(
-        navigatorKey: navigatorKey,
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: primaryColor,
-        ),
-        home: const MainPage(),
-      ),
-    );
-  }
-}

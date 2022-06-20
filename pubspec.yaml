@@ -27,6 +27,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  android_alarm_manager_plus: ^2.0.6
   cloud_firestore: ^3.1.14
   cupertino_icons: ^1.0.2
   datetime_picker_formfield: ^2.0.0
