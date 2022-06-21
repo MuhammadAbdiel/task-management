@@ -108,11 +108,11 @@ class _RegisterPageState extends State<RegisterPage> {
                         controller: firstNameController,
                         keyboardType: TextInputType.name,
                         validator: (text) => text != null && text.isEmpty
-                            ? 'Please enter your name!'
+                            ? 'Silahkan masukkan nama anda!'
                             : null,
                         decoration: const InputDecoration(
                           border: InputBorder.none,
-                          hintText: 'First Name',
+                          hintText: 'Nama Depan',
                           hintStyle: TextStyle(
                             fontFamily: 'Raleway',
                             color: Color.fromARGB(255, 118, 118, 118),
@@ -135,11 +135,11 @@ class _RegisterPageState extends State<RegisterPage> {
                         controller: lastNameController,
                         keyboardType: TextInputType.name,
                         validator: (text) => text != null && text.isEmpty
-                            ? 'Please enter your name!'
+                            ? 'Silahkan masukkan nama anda!'
                             : null,
                         decoration: const InputDecoration(
                           border: InputBorder.none,
-                          hintText: 'Last Name',
+                          hintText: 'Nama Belakang',
                           hintStyle: TextStyle(
                             fontFamily: 'Raleway',
                             color: Color.fromARGB(255, 118, 118, 118),
@@ -162,7 +162,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         controller: emailController,
                         keyboardType: TextInputType.emailAddress,
                         validator: (text) => text != null && text.isEmpty
-                            ? 'Please enter your email correctly!'
+                            ? 'Silahkan masukkan email valid!'
                             : null,
                         decoration: const InputDecoration(
                           border: InputBorder.none,
@@ -192,9 +192,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         validator: (text) {
                           RegExp regExp = RegExp(r'^.{6,}$');
                           return text != null && text.isEmpty
-                              ? 'Password is required!'
+                              ? 'Silahkan masukkan password valid!'
                               : !regExp.hasMatch(text!)
-                                  ? 'Enter a valid password (Min. 6 Character)'
+                                  ? 'Masukkan password valid (Min. 6 Character)'
                                   : null;
                         },
                         decoration: const InputDecoration(
@@ -259,7 +259,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           signUp(emailController.text, passwordController.text);
                         },
                         child: const Text(
-                          'Register',
+                          'Daftar',
                           style: TextStyle(
                             fontSize: 20,
                             color: Colors.white,
@@ -273,7 +273,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text(
-                          'Do you have an account?',
+                          'Belum punya akun?',
                           style: TextStyle(
                             fontFamily: 'Raleway',
                             fontSize: 16,

@@ -47,15 +47,16 @@ class _ProfilePageState extends State<ProfilePage> {
         child: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.only(
-              top: 32, right: 24, left: 24,
+              top: 32,
+              right: 24,
+              left: 24,
             ),
             child: Column(
               children: [
                 Row(
                   children: [
                     InkWell(
-                      onTap: () 
-                      {
+                      onTap: () {
                         Navigator.pop(context);
                       },
                       child: const Icon(
@@ -66,7 +67,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     const SizedBox(width: 16),
                     const Text(
-                      "Account Setting",
+                      "Pengaturan Akun",
                       style: TextStyle(
                         fontFamily: 'Raleway',
                         fontSize: 28,
@@ -175,7 +176,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 Icon(Icons.person, size: 35),
                                 SizedBox(width: 16),
                                 Text(
-                                  'Account',
+                                  'Akun',
                                   style: TextStyle(
                                     fontSize: 20,
                                     fontFamily: 'Raleway',
@@ -197,7 +198,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               borderRadius: BorderRadius.circular(20),
                             ),
                             title: const Text(
-                              'Log out',
+                              'Logout',
                               style: TextStyle(
                                 fontFamily: 'Raleway',
                                 fontSize: 24,
@@ -207,7 +208,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               textAlign: TextAlign.center,
                             ),
                             content: const Text(
-                              'Are you sure?',
+                              'Apakah anda yakin?',
                               style: TextStyle(
                                 fontFamily: 'Raleway',
                                 fontSize: 20,
@@ -243,7 +244,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                               MainAxisAlignment.center,
                                           children: const [
                                             Text(
-                                              'No',
+                                              'Tidak',
                                               style: TextStyle(
                                                 fontFamily: 'Raleway',
                                                 fontSize: 16,
@@ -291,7 +292,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                               MainAxisAlignment.center,
                                           children: const [
                                             Text(
-                                              'Yes',
+                                              'Ya',
                                               style: TextStyle(
                                                 fontFamily: 'Raleway',
                                                 fontSize: 16,
@@ -314,7 +315,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           Icon(Icons.logout, size: 35),
                           SizedBox(width: 16),
                           Text(
-                            'Log out',
+                            'Logout',
                             style: TextStyle(
                               fontSize: 20,
                               fontFamily: 'Raleway',

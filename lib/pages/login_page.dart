@@ -72,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         validator: (text) => text != null && text.isEmpty
-                            ? 'Not valid input'
+                            ? 'Input tidak valid'
                             : null,
                       ),
                     ),
@@ -100,7 +100,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         validator: (text) => text != null && text.isEmpty
-                            ? 'Not valid input'
+                            ? 'Input tidak valid'
                             : null,
                       ),
                     ),
@@ -136,7 +136,7 @@ class _LoginPageState extends State<LoginPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text(
-                          "Don't have an account?",
+                          "Belum punya akun?",
                           style: TextStyle(
                             fontFamily: 'Raleway',
                             fontSize: 16,
@@ -155,7 +155,7 @@ class _LoginPageState extends State<LoginPage> {
                             );
                           },
                           child: const Text(
-                            'Register',
+                            'Daftar',
                             style: TextStyle(
                               decoration: TextDecoration.underline,
                               fontFamily: 'Raleway',
@@ -193,9 +193,9 @@ class _LoginPageState extends State<LoginPage> {
       );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        print('No user found for that email.');
+        print('Email tidak terdaftar.');
       } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
+        print('Password salah.');
       }
     }
 
