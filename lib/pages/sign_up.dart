@@ -19,9 +19,21 @@ class SignUp extends StatelessWidget {
             child: Center(
               child: Column(
                 children: [
+                  const SizedBox(height: 20),
                   Container(
-                    width: 150,
-                    height: 170,
+                    child: Text(
+                       'Task Management',
+                        style: TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.w600,
+                        color: Color.fromARGB(255, 71, 71, 71),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 40),
+                  Container(
+                    width: 155,
+                    height: 175,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: const Color(0xffEEEEEE),
@@ -30,9 +42,9 @@ class SignUp extends StatelessWidget {
                       'assets/icons/png/list.png',
                     ),
                   ),
-                  const SizedBox(height: 100),
+                  const SizedBox(height: 60),
                   const SignInButton(),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 10),
                   const SignInButton2(),
                 ],
               ),

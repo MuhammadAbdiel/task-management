@@ -84,6 +84,17 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: Column(
                   children: [
                     Container(
+                    child: Text(
+                       'Register',
+                        style: TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.w600,
+                        color: Color.fromARGB(255, 71, 71, 71),
+                        ),
+                      ),
+                    ),
+                  const SizedBox(height: 25),
+                    Container(
                       width: 150,
                       height: 170,
                       decoration: BoxDecoration(

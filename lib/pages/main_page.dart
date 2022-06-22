@@ -26,7 +26,7 @@ class MainPage extends StatelessWidget {
                     const Text(
                       'Dragoyang',
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 21,
                         fontFamily: 'Raleway',
                         fontWeight: FontWeight.w600,
                         color: Color(0xff3F3F3F),
