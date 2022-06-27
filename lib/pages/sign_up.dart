@@ -20,10 +20,10 @@ class SignUp extends StatelessWidget {
               child: Column(
                 children: [
                   const SizedBox(height: 20),
-                  Container(
+                  const SizedBox(
                     child: Text(
-                       'Task Management',
-                        style: TextStyle(
+                      'Task Management',
+                      style: TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.w600,
                         color: Color.fromARGB(255, 71, 71, 71),

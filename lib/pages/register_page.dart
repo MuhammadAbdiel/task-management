@@ -83,17 +83,17 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Center(
                 child: Column(
                   children: [
-                    Container(
-                    child: Text(
-                       'Register',
+                    const SizedBox(
+                      child: Text(
+                        'Register',
                         style: TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.w600,
-                        color: Color.fromARGB(255, 71, 71, 71),
+                          fontSize: 32,
+                          fontWeight: FontWeight.w600,
+                          color: Color.fromARGB(255, 71, 71, 71),
                         ),
                       ),
                     ),
-                  const SizedBox(height: 25),
+                    const SizedBox(height: 25),
                     Container(
                       width: 150,
                       height: 170,
@@ -284,7 +284,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text(
-                          'Belum punya akun?',
+                          'Sudah punya akun?',
                           style: TextStyle(
                             fontFamily: 'Raleway',
                             fontSize: 16,

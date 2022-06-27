@@ -38,17 +38,17 @@ class _LoginPageState extends State<LoginPage> {
                 key: formKey,
                 child: Column(
                   children: [
-                    Container(
-                    child: Text(
-                       'Login',
+                    const SizedBox(
+                      child: Text(
+                        'Login',
                         style: TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.w600,
-                        color: Color.fromARGB(255, 71, 71, 71),
+                          fontSize: 32,
+                          fontWeight: FontWeight.w600,
+                          color: Color.fromARGB(255, 71, 71, 71),
                         ),
                       ),
                     ),
-                  const SizedBox(height: 25),
+                    const SizedBox(height: 25),
                     Container(
                       width: 150,
                       height: 170,
