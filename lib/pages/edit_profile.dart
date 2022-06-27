@@ -20,7 +20,6 @@ class _EditProfileState extends State<EditProfile> {
   final formKey = GlobalKey<FormState>();
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
-  final emailController = TextEditingController();
 
   final user = FirebaseAuth.instance.currentUser!;
   User? userLoggedIn = FirebaseAuth.instance.currentUser!;
@@ -40,7 +39,6 @@ class _EditProfileState extends State<EditProfile> {
           userModel = UserModel.fromJson(value.data());
           firstNameController.text = userModel.firstName.toString();
           lastNameController.text = userModel.lastName.toString();
-          emailController.text = user.email!;
         });
       },
     );
@@ -48,9 +46,8 @@ class _EditProfileState extends State<EditProfile> {
 
   updateProfile() async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    User? user = FirebaseAuth.instance.currentUser!;
 
-    await firebaseFirestore.collection('users').doc(user.uid).update({
+    await firebaseFirestore.collection('users').doc(userLoggedIn!.uid).update({
       'firstName': firstNameController.text,
       'lastName': lastNameController.text
     });
@@ -58,7 +55,8 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   void dispose() {
-    emailController.dispose();
+    firstNameController.dispose();
+    lastNameController.dispose();
 
     super.dispose();
   }
