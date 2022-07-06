@@ -2,8 +2,9 @@
     package="com.example.flutter_uts">
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
-        android:label="flutter_uts"
+        android:label="Task Management"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
